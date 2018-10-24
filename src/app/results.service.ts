@@ -20,25 +20,25 @@ export class ResultsService {
     private http: HttpClient) {
   }
 
-  getAllResults(): Observable<any[]> {
-    return this.http.get<any[]>(CLIENT_API + 'builds/android');
+  getAllResults(client: string): Observable<any[]> {
+    return this.http.get<any[]>(CLIENT_API + `builds/${client}`);
   }
 
-  getResultById(buildId: string) {
-    return this.http.get<any[]>(CLIENT_API + 'build/android/' + buildId);
+  getResultById(client: string, buildId: string) {
+    return this.http.get<any[]>(CLIENT_API + `build/${client}/${buildId}`);
   }
 
-  replaceScreenshot(buildId: string, screenshot: string) {
+  replaceScreenshot(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot
     }
-    return this.http.post(`${CLIENT_API}build/android/${buildId}/replace`, params);
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/replace`, params);
   }
 
-  undoReplacement(buildId: string, screenshot: string) {
+  undoReplacement(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot
     }
-    return this.http.post(`${CLIENT_API}build/android/${buildId}/undoReplace`, params);
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/undoReplace`, params);
   }
 }

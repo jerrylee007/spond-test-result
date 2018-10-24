@@ -9,13 +9,20 @@ import {Router} from '@angular/router';
   styleUrls: [ './dashboard.component.scss' ]
 })
 export class DashboardComponent implements OnInit {
-  builds: any
-  buildsDetails: any
+  androidBuilds: any
+  iosBuilds: any
+  webBuilds: any
 
   constructor(private service: ResultsService,
             private router: Router) {
-    this.service.getAllResults().subscribe(results=>{
-      this.builds = results;
+    this.service.getAllResults('android').subscribe(results=>{
+      this.androidBuilds = results;
+    });
+    this.service.getAllResults('ios').subscribe(results=>{
+      this.iosBuilds = results;
+    });
+    this.service.getAllResults('web').subscribe(results=>{
+      this.webBuilds = results;
     });
   }
 
