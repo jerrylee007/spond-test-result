@@ -1,0 +1,108 @@
+$left-part-columns: 8;
+$neg-margin-padding: 20px;
+$vote-option-line-height: 40px;
+
+// AVATAR
+
+@mixin avatar($avatar-dimension){
+    width: $avatar-dimension;
+    height: $avatar-dimension;
+    line-height: $avatar-dimension;
+}
+
+
+// MEDIA QUERIES
+
+
+$spond-landing-break-point: 0px;
+
+@mixin spond-breakpoint($class) {
+    @if $class == xs {
+        @media (max-width: 0px) {
+            @content;
+        }
+    } @else if $class == sm {
+        @media (max-width: 0px) {
+            @content;
+        }
+    } @else if $class == md {
+        @media (max-width: 992px) {
+            @content;
+        }
+    } @else if $class == lg {
+        @media (max-width: 1200px) {
+            @content;
+        }
+    } @else {
+        @warn "Breakpoint mixin supports: xs, sm, md, lg";
+    }
+}
+
+@mixin spond-breakpoint-above($class) {
+    @if $class == xs {
+        @media (min-width: 0px) {
+            @content;
+        }
+    } @else if $class == sm {
+        @media (min-width: 0px) {
+            @content;
+        }
+    } @else if $class == md {
+        @media (min-width: 992px + 1px) {
+            @content;
+        }
+    } @else if $class == lg {
+        @media (min-width: 1200px + 1px) {
+            @content;
+        }
+    } @else {
+        @warn "Breakpoint mixin supports: xs, sm, md, lg";
+    }
+}
+
+
+$desktop: new-breakpoint(min-width 1280px);
+$landscape: new-breakpoint(max-width 1279px);
+$portrait: new-breakpoint(max-width 1023px);
+$mobile: new-breakpoint(max-width 767px);
+
+@mixin spond-breakpoint-above-width($width) {
+    @media (min-width: $width + 1px) {
+        @content;
+    }
+}
+
+@mixin spond-breakpoint-between-widths($min-width, $max-width) {
+    @media (min-width: $min-width + 1px) and (max-width: $max-width) {
+        @content;
+    }
+}
+
+@mixin spond-breakpoint-below-width($width) {
+    @media (max-width: $width) {
+        @content;
+    }
+}
+
+@mixin spond-breakpoint-above-height($height) {
+    @media (min-height: $height + 1px) {
+        @content;
+    }
+}
+
+
+// GENERAL
+
+@mixin spond-card-container {
+    border: 1px solid $spond-box-border-color;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    border-radius: $border-radius;
+
+    @include spond-breakpoint(xs) {
+        border-radius:0;
+        border-color: #e5e6e9 #ffffff #d0d1d5;
+    }
+
+    position: relative;
+    background: $spond-box-bg;
+}

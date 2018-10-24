@@ -1,0 +1,7 @@
+<button class="spinner-button-component spinner-button btn btn-default {{buttonTheme}}"
+  [disabled]="isSpinning || isDisabled">
+  <img [src]="spinnerResource" [hidden]="!isSpinning"/>
+  <span [style.visibility]="isSpinning ? 'hidden': 'visible'">
+    <ng-content></ng-content>
+  </span>
+</button>

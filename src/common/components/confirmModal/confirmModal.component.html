@@ -1,0 +1,31 @@
+<div bsModal #modal="bs-modal" class="modal fade" tabindex="-1" role="dialog" [config]="{keyboard: false, backdrop: 'static'}">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="close pull-right" (click)="onCancelClicked()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" [innerHTML]="description">
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+          <button class="btn btn-default btn-with-shadow"
+            *ngIf="cancelLabel?.length"
+            [disabled]="isSubmitting"
+            (click)="onCancelClicked()">
+            {{cancelLabel}}
+          </button>
+          <spinner-button [buttonTheme]="!!isDestructive ? 'spond-red' : 'spond-blue'"
+            spinnerTheme="spinner-white"
+            [isSpinning]="isSubmitting"
+            *ngIf="confirmLabel?.length"
+            (click)="onConfirmClicked()">
+            {{confirmLabel}}
+          </spinner-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

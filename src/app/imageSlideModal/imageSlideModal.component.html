@@ -33,9 +33,22 @@
         <div class="action-note">
           You can use arrow keys to navigate as well. 
         </div>
-        <button type="button" class="btn btn-default btn-with-shadow action-button" (click)="onReplaceClicked(showingImage)" aria-label="Close">
+        <spinner-button 
+        #btnReplace
+        buttonTheme="btn-with-shadow spond-big-blue"
+        spinnerTheme="spinner-white"
+        *ngIf="!hasScreenshotBeenReplaced(showingImage)"
+        (click)="onReplaceClicked(showingImage)" aria-label="Close">
           Make this case pass
-        </button>
+        </spinner-button>
+        <spinner-button 
+        #btnUndoReplace
+        *ngIf="hasScreenshotBeenReplaced(showingImage)"
+        spinnerTheme="spinner-white"
+        buttonTheme="btn-with-shadow spond-big-red"
+        (click)="onUndoReplacementClicked(showingImage)" aria-label="Close">
+          Undo the replacement
+        </spinner-button>
       </div>
     </div>
   </div>

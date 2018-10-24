@@ -5,6 +5,7 @@ import {Observable} from 'rxjs/Observable';
 import {CLIENT_API} from '../results.service';
 import { ResultsService } from '../results.service';
 
+import {SpinnerButtonComponent} from '../../common/components/spinnerButton';
 
 @Component({
   selector: 'image-slide-modal',
@@ -13,11 +14,17 @@ import { ResultsService } from '../results.service';
 })
 export class ImageSlideModalComponent implements OnInit {
   @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('btnReplace')
+  btnReplace: SpinnerButtonComponent
+  @ViewChild('btnUndoReplace')
+  btnUndoReplace: SpinnerButtonComponent
 
   showingImage: any
   imageCandidates: any[]
   currentIndex: number
   build: any
+
+  @Output() onBuildUpdated: EventEmitter<any> = new EventEmitter();
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
@@ -46,16 +53,20 @@ export class ImageSlideModalComponent implements OnInit {
     this.modal.show()
   }
 
+  hasScreenshotBeenReplaced(screenshot) {
+    return this.build.replaced.includes(screenshot);
+  }
+
   getResultScreenshotPath(screenshot) {
-    return CLIENT_API  + `results/${this.build.buildNumber}/Screenshots/result/${screenshot}`;
+    return CLIENT_API  + `android/results/${this.build.buildNumber}/Screenshots/result/${screenshot}`;
   }
 
   getNewScreenshotPath(screenshot) {
-    return CLIENT_API  + `results/${this.build.buildNumber}/Screenshots/new/${screenshot}`;
+    return CLIENT_API  + `android/results/${this.build.buildNumber}/Screenshots/new/${screenshot}`;
   }
 
   getBaseScreenshotPath(screenshot) {
-    return CLIENT_API + `base/${screenshot}`;
+    return CLIENT_API + `android/base/${screenshot}`;
   }
 
   onPreviousClicked(){
@@ -72,8 +83,25 @@ export class ImageSlideModalComponent implements OnInit {
     }
   }
 
+  onUndoReplacementClicked(screenshot) {
+    this.btnUndoReplace.isSpinning = true;
+    this.service.undoReplacement(this.build.buildNumber, screenshot).subscribe(results=>{
+      this.btnUndoReplace.isSpinning = false;
+      this.hide();
+      this.onBuildUpdated.emit(results);
+    }, error=>{
+      this.btnUndoReplace.isSpinning = false;
+    });
+  }
+
   onReplaceClicked(screenshot) {
+    this.btnReplace.isSpinning = true;
     this.service.replaceScreenshot(this.build.buildNumber, screenshot).subscribe(results=>{
+      this.btnReplace.isSpinning = false;
+      this.onNextClicked();
+      this.onBuildUpdated.emit(results);
+    }, error=>{
+      this.btnReplace.isSpinning = false;
     });
   }
 

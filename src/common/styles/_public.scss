@@ -1,0 +1,70 @@
+.spond-col1{
+    width:$col1Width;
+}
+
+.spond-col2{
+    width:$col2Width;
+}
+
+.spond-col3{
+    width:$col3Width;
+}
+
+
+.right-column {
+    width:$col3Width;
+    display:block;
+    float:right;
+}
+
+.left{
+	float: left;
+}
+
+.right{
+	float: right;
+}
+
+.relative{
+	position: relative;
+}
+
+.clearfix{
+	&::after{
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+.highlight {
+  color: $spond-blue;
+  &:hover{
+    cursor:pointer;
+    text-decoration: underline;
+  }
+}
+
+.clickable {
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+.bonus-view-wrapper {
+    // Debug
+    width:$col2Width;
+    float:left;
+    // width:100%;
+    box-sizing: border-box;
+    display: block;
+    // margin:15px 0 0 180px;
+    // margin:15px 0 0 0;
+    text-align: left;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}

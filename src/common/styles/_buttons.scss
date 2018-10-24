@@ -1,0 +1,31 @@
+.btn {
+  font-size: 12px;
+  border-radius: 2px;
+  padding: 8px 16px;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #00B4CC;
+  border-color: #009eb3;
+
+  &:hover {
+    color: #fff;
+    background-color: #008799;
+    border-color: #006875;
+  }
+}
+
+.btn.btn-with-shadow {
+  background: linear-gradient(to bottom,transparent 50%,rgba(33,65,69,.05) 100%);
+  border: 1px solid #c5c5c5;
+  &:hover {
+    background-color: #F2F2F2;
+  }
+  &.blue {
+    background: #4db7ca linear-gradient(to bottom, #4db7ca 50%, #28a5b5 100%) !important;
+    border: 0;
+    box-shadow: none;
+    color: white;
+  }
+}

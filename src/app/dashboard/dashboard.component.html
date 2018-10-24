@@ -1,4 +1,7 @@
 <div class="dashboard-wrapper">
+  <div class="client-title">
+    Android automation
+  </div>
   <div class="build-number-col border-top app-background">
     Build No.
   </div>
@@ -9,7 +12,13 @@
     Time
   </div>
    <div class="build-faild-case-number-col border-top app-background">
-    Failed case count
+    Original failed
+  </div>
+   <div class="build-fixed-case-number-col border-top app-background">
+    Fixed failed
+  </div>
+   <div class="build-remain-case-number-col border-top app-background">
+    Remain failed
   </div>
 
     <div *ngFor="let build of builds" class="build-detail-row" (click)="goToBuildFailedDetails(build)">
@@ -23,7 +32,13 @@
         {{build.time}}
       </div>
        <div class="build-faild-case-number-col" >
-        {{build.data.length}}
+        {{build.failedData.length}}
+      </div>
+       <div class="build-fixed-case-number-col" >
+        {{build.replaced ? build.replaced.length : 0}}
+      </div>
+       <div class="build-remain-case-number-col" >
+        {{build.failedData.length - (build.replaced ? build.replaced.length : 0)}}
       </div>
     </div>
 </div>

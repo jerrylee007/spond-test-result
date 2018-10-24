@@ -1,0 +1,402 @@
+@font-face {
+  font-family: 'spond-icons';
+  src:  url('fonts/spond-icons.eot?kz9xsw');
+  src:  url('fonts/spond-icons.eot?kz9xsw#iefix') format('embedded-opentype'),
+    url('fonts/spond-icons.woff2?kz9xsw') format('woff2'),
+    url('fonts/spond-icons.ttf?kz9xsw') format('truetype'),
+    url('fonts/spond-icons.woff?kz9xsw') format('woff'),
+    url('fonts/spond-icons.svg?kz9xsw#spond-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'spond-icons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-payment-product:before {
+  content: "\e952";
+}
+.icon-new-terms:before {
+  content: "\e951";
+}
+.icon-hierarchy:before {
+  content: "\e950";
+}
+.icon-cashback-contribution-empty-state:before {
+  content: "\e94f";
+}
+.icon-cashback_pending_funds:before {
+  content: "\e945";
+}
+.icon-navigation-menu-cashback-highlighted:before {
+  content: "\e946";
+}
+.icon-navigation-menu-cashback:before {
+  content: "\e947";
+}
+.icon-navigation-menu-chat:before {
+  content: "\e948";
+}
+.icon-navigation-menu-highlighted:before {
+  content: "\e949";
+}
+.icon-navigation-menu-home:before {
+  content: "\e94a";
+}
+.icon-cashback_contributors:before {
+  content: "\e94b";
+}
+.icon-cashback_funds_group_collected:before {
+  content: "\e94c";
+}
+.icon-cashback_tip_people:before {
+  content: "\e94d";
+}
+.icon-cashback_your_contribution:before {
+  content: "\e94e";
+}
+.icon-comment-reply-arrow:before {
+  content: "\e944";
+}
+.icon-invite-subgroups:before {
+  content: "\e93c";
+}
+.icon-general-person:before {
+  content: "\e93d";
+}
+.icon-invite-main-group:before {
+  content: "\e93e";
+}
+.icon-left-menu-facebook:before {
+  content: "\e93f";
+}
+.icon-left-menu-favourite:before {
+  content: "\e940";
+}
+.icon-left-menu-feedback:before {
+  content: "\e941";
+}
+.icon-left-menu-group:before {
+  content: "\e942";
+}
+.icon-left-menu-help:before {
+  content: "\e943";
+}
+.icon-chat:before {
+  content: "\e93b";
+}
+.icon-main-menu-chat:before {
+  content: "\e93a";
+}
+.icon-poll:before {
+  content: "\e939";
+}
+.icon-payment-card-cvc:before {
+  content: "\e936";
+}
+.icon-payment-card-expiration-date:before {
+  content: "\e937";
+}
+.icon-payment-card-number:before {
+  content: "\e938";
+}
+.icon-event-empty:before {
+  content: "\e935";
+}
+.icon-group-3-people:before {
+  content: "\e934";
+}
+.icon-accept-outline:before {
+  content: "\e92d";
+}
+.icon-decline-outline:before {
+  content: "\e92e";
+}
+.icon-summary-email:before {
+  content: "\e92f";
+}
+.icon-summary-push:before {
+  content: "\e930";
+}
+.icon-summary-sms:before {
+  content: "\e931";
+}
+.icon-unanswered-outline:before {
+  content: "\e932";
+}
+.icon-waiting-list-outline:before {
+  content: "\e933";
+}
+.icon-attachment:before {
+  content: "\e92c";
+}
+.icon-file-image:before {
+  content: "\e92b";
+}
+.icon-file-text-document:before {
+  content: "\e929";
+}
+.icon-file-spreadsheet:before {
+  content: "\e92a";
+}
+.icon-file-excel:before {
+  content: "\e924";
+}
+.icon-file-pdf:before {
+  content: "\e925";
+}
+.icon-file-power-point:before {
+  content: "\e926";
+}
+.icon-file-unknown:before {
+  content: "\e927";
+}
+.icon-file-word:before {
+  content: "\e928";
+}
+.icon-waiting-list:before {
+  content: "\e923";
+}
+.icon-context-menu-arrow-filled:before {
+  content: "\e922";
+}
+.icon-icon_event_context_menu_all_occurrences:before {
+  content: "\e91e";
+}
+.icon-icon_event_context_menu_single_occurrence:before {
+  content: "\e91f";
+}
+.icon-icon_toolbar_cancel_spond:before {
+  content: "\e920";
+}
+.icon-icon_toolbar_send_now:before {
+  content: "\e921";
+}
+.icon-scheduled_spond_list_view:before {
+  content: "\e917";
+}
+.icon-create-event-type-date-poll:before {
+  content: "\e918";
+}
+.icon-create-event-type-one-date:before {
+  content: "\e919";
+}
+.icon-create-event-type-repeating:before {
+  content: "\e91a";
+}
+.icon-create-event-type-scheduled:before {
+  content: "\e91b";
+}
+.icon-scheduled_tips:before {
+  content: "\e91c";
+}
+.icon-unanswered_spond_list_view:before {
+  content: "\e91d";
+}
+.icon-group-action-create-post:before {
+  content: "\e911";
+}
+.icon-group-action-share-photo:before {
+  content: "\e912";
+}
+.icon-post-action-comment:before {
+  content: "\e913";
+}
+.icon-post-action-like:before {
+  content: "\e914";
+}
+.icon-post-context-menu-delete:before {
+  content: "\e915";
+}
+.icon-post-context-menu:before {
+  content: "\e916";
+}
+.icon-export-event-participants-list:before {
+  content: "\e910";
+}
+.icon-contact-point-email:before {
+  content: "\e90e";
+}
+.icon-contact-point-phone:before {
+  content: "\e90f";
+}
+.icon-social-facebook:before {
+  content: "\e90d";
+}
+.icon-excel-template-step-icon:before {
+  content: "\e90c";
+}
+.icon-excel-template-download:before {
+  content: "\e909";
+}
+.icon-excel-template-upload:before {
+  content: "\e90a";
+}
+.icon-edit-spond-button-icon:before {
+  content: "\e907";
+}
+.icon-add-people:before {
+  content: "\e908";
+}
+.icon-location:before {
+  content: "\e90b";
+}
+.icon-main-menu-notifications-updated:before {
+  content: "\e906";
+}
+.icon-left-menu-item-blogg:before {
+  content: "\e902";
+}
+.icon-left-menu-item-contact:before {
+  content: "\e903";
+}
+.icon-left-menu-item-help:before {
+  content: "\e904";
+}
+.icon-search-bar:before {
+  content: "\e905";
+}
+.icon-create-group:before {
+  content: "\e901";
+}
+.icon-create-spond-event-updated:before {
+  content: "\e900";
+}
+.icon-banner-heart:before {
+  content: "\e629";
+}
+.icon-date-picker-next:before {
+  content: "\e600";
+}
+.icon-dialog-box-close:before {
+  content: "\e601";
+}
+.icon-contact-picker-remove-selected-contact:before {
+  content: "\e602";
+}
+.icon-context-menu-cancel-spond:before {
+  content: "\e603";
+}
+.icon-context-menu-delete-spond:before {
+  content: "\e604";
+}
+.icon-context-menu-edit-spond:before {
+  content: "\e605";
+}
+.icon-context-menu-recipients:before {
+  content: "\e606";
+}
+.icon-create-spond-date-date-field:before {
+  content: "\e607";
+}
+.icon-create-spond-date-location-field:before {
+  content: "\e608";
+}
+.icon-create-spond-date-poll:before {
+  content: "\e609";
+}
+.icon-create-spond-event:before {
+  content: "\e60a";
+}
+.icon-create-spond-photo-poll:before {
+  content: "\e60b";
+}
+.icon-create-spond-text-poll:before {
+  content: "\e60c";
+}
+.icon-date-picker-prev:before {
+  content: "\e60d";
+}
+.icon-general-approve:before {
+  content: "\e60e";
+}
+.icon-general-browse-photo-button:before {
+  content: "\e60f";
+}
+.icon-general-cancel:before {
+  content: "\e610";
+}
+.icon-group-settings:before {
+  content: "\e611";
+}
+.icon-main-menu-groups:before {
+  content: "\e612";
+}
+.icon-main-menu-new-spond:before {
+  content: "\e613";
+}
+.icon-main-menu-notifications:before {
+  content: "\e614";
+}
+.icon-main-menu-sponds:before {
+  content: "\e615";
+}
+.icon-profile-popover-email:before {
+  content: "\e616";
+}
+.icon-profile-popover-phone:before {
+  content: "\e617";
+}
+.icon-recepients-list-remove-recepient:before {
+  content: "\e618";
+}
+.icon-context-menu-add-people:before {
+  content: "\e619";
+}
+.icon-spond-card-comment:before {
+  content: "\e61a";
+}
+.icon-spond-card-event-location:before {
+  content: "\e61b";
+}
+.icon-spond-card-event-no:before {
+  content: "\e61c";
+}
+.icon-spond-card-event-time:before {
+  content: "\e61d";
+}
+.icon-spond-card-event-yes:before {
+  content: "\e61e";
+}
+.icon-spond-card-expand-photo:before {
+  content: "\e61f";
+}
+.icon-spond-card-finalize-date:before {
+  content: "\e620";
+}
+.icon-spond-card-friendly-reminder:before {
+  content: "\e621";
+}
+.icon-spond-card-more-votes:before {
+  content: "\e622";
+}
+.icon-spond-filter-event:before {
+  content: "\e623";
+}
+.icon-spond-filter-inbox:before {
+  content: "\e624";
+}
+.icon-spond-filter-member:before {
+  content: "\e625";
+}
+.icon-spond-filter-sent:before {
+  content: "\e626";
+}
+.icon-spond-card-recipients:before {
+  content: "\e627";
+}
+.icon-general-chevron:before {
+  content: "\e628";
+}

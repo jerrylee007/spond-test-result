@@ -1,0 +1,73 @@
+.spinner-button-component {
+  border-radius: 2px;
+  padding: 8px 16px;
+  position: relative;
+
+  img {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 50%;
+    margin-left: -9px;
+    top: 50%;
+    margin-top: -9px;
+  }
+
+  &.spond-blue {
+    background-color: #4db7ca;
+    background: linear-gradient(to bottom,#4db7ca 50%,#28a5b5 100%) !important;
+    border: 1px solid #00b4cc;
+    color: #ffffff;
+    &:hover {
+      background-color: #2aa6a8;
+      background: linear-gradient(to bottom,#00b4cc 50%,#2aa6a8 100%) !important;
+    }
+  }
+
+  &.spond-red {
+    background-color: #d9534f;
+    background: linear-gradient(to bottom,#d9534f 50%,#c3534f 100%) !important;
+    border: 1px solid #d9534f;
+    color: #ffffff;
+    &:hover {
+      background-color: #d9534f;
+      background: linear-gradient(to bottom,#d2504a 50%,#b04038 100%) !important;
+    }
+  }
+
+  &.spond-small {
+    min-width: 60px;
+    color: #ffffff;
+    padding: 6px 12px;
+    font-size: 12px;
+    border-radius: 2px;
+  }
+
+  &.spond-big {
+    min-width: 100px;
+    color: #ffffff;
+    padding: 10px 32px;
+    font-size: 16px;
+    border-radius: 2px;
+  }
+
+  &.spond-small-blue {
+    @extend .spond-small;
+    @extend .spond-blue;
+  }
+
+  &.spond-small-red {
+    @extend .spond-small;
+    @extend .spond-red;
+  }
+
+  &.spond-big-blue {
+    @extend .spond-big;
+    @extend .spond-blue;
+  }
+
+  &.spond-big-red {
+    @extend .spond-big;
+    @extend .spond-red;
+  }
+}

@@ -21,7 +21,7 @@ export class ResultsService {
   }
 
   getAllResults(): Observable<any[]> {
-    return this.http.get<any[]>(CLIENT_API + 'builds');
+    return this.http.get<any[]>(CLIENT_API + 'builds/android');
   }
 
   getResultById(buildId: string) {
@@ -33,6 +33,12 @@ export class ResultsService {
       screenshot: screenshot
     }
     return this.http.post(`${CLIENT_API}build/android/${buildId}/replace`, params);
+  }
+
+  undoReplacement(buildId: string, screenshot: string) {
+    let params = {
+      screenshot: screenshot
     }
+    return this.http.post(`${CLIENT_API}build/android/${buildId}/undoReplace`, params);
   }
 }

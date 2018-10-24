@@ -4,12 +4,12 @@ import { Location } from '@angular/common';
 import { ResultsService } from '../results.service';
 
 import {ImageSlideModalComponent} from '../imageSlideModal/imageSlideModal.component';
-
+declare var require: any;
 
 @Component({
   selector: 'build-detail',
   templateUrl: './build-detail.component.html',
-  styleUrls: [ './build-detail.component.css' ]
+  styleUrls: [ './build-detail.component.scss' ]
 })
 export class BuildDetailComponent implements OnInit {
   @Input()
@@ -19,6 +19,9 @@ export class BuildDetailComponent implements OnInit {
   imageSlideModal: ImageSlideModalComponent
 
   buildId: string;
+
+  passedIcon: any = require('./assets/icon_passed.png');
+  failedIcon: any = require('./assets/icon_failed.png');
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +37,14 @@ export class BuildDetailComponent implements OnInit {
 
   ngOnInit() {
 
+  }
+
+  isCaseFixed(caseName : string) {
+    return this.build.replaced.includes(caseName);
+  }
+
+  onBuildUpdated(results) {
+    this.build = results;
   }
 
   showFailedCase(caseName : string) {

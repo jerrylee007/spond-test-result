@@ -3,10 +3,13 @@
     	*ngFor="let case of build.failedData"
     	class="build-detail-row"
     	 (click)="showFailedCase(case)">
-      <div class="build-case-title">
+   	  <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
+   	  <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/>
+      <span class="build-case-title">
         {{case}}
-      </div>
+      </span>
     </div>
 </div>
 
-<image-slide-modal #imageSlideModal></image-slide-modal>
+<image-slide-modal #imageSlideModal
+(onBuildUpdated)="onBuildUpdated($event)"></image-slide-modal>

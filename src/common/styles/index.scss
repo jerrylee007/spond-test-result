@@ -1,0 +1,12 @@
+/* Global styles */
+
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import "variables";
+@import "public";
+@import "typography";
+@import "buttons";
+@import "modals";
+@import "unsupported";
+@import "mixins";

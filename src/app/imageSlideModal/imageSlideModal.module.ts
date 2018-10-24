@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import {ImageSlideModalComponent} from './imageSlideModal.component';
+import {SpinnerButtonModule} from '../../common/components/spinnerButton';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {ImageSlideModalComponent} from './imageSlideModal.component';
   imports: [
     ModalModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    SpinnerButtonModule
   ],
   providers: [
   ],

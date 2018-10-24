@@ -1,0 +1,51 @@
+@import '../../../common/styles/variables';
+
+.spond-header-component {
+  display: block;
+  background: rgba(255, 255, 255, 1);
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 900;
+  border-bottom: 1px solid #e1e8ed;
+
+  .logo-wrapper {
+    width: 100%;
+    min-width: 300px;
+    text-align: center;
+
+    .logo-img-wrapper {
+      display: inline-block;
+      padding-right: 10px;
+    }
+
+    .cashback-title {
+      font-size: 26px;
+      font-weight: 200;
+      display: inline-block;
+      padding-left: 12px;
+      border-left: 1px solid rgba(0, 0, 0, 0.1);
+      vertical-align: bottom;
+      text-transform:uppercase;
+      letter-spacing: 3px;
+    }
+
+
+    img.spond-logo {
+      border-color: #ffffff;
+      color: rgba(255, 255, 255, 0.3);
+      height: 26px;
+      width: 130px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto;
+      padding-top: 11px;
+      text-align: center;
+      -webkit-box-sizing: content-box;
+      -moz-box-sizing: content-box;
+      box-sizing: content-box;
+    }
+  }
+}

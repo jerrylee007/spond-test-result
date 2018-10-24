@@ -11,6 +11,7 @@ import { AppRoutingModule }     from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent }   from './dashboard/dashboard.component';
 import { BuildDetailModule }  from './build-detail';
+import { SpondCommonModule }  from '../common/common.module';
 
 import { ModalModule } from 'ng2-bootstrap/modal';
 
@@ -21,6 +22,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
     AppRoutingModule,
     HttpClientModule,
     BuildDetailModule,
+    SpondCommonModule,
     ModalModule.forRoot(),
     RouterModule.forRoot(routes, { useHash: false }),
   ],

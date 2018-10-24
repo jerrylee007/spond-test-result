@@ -1,0 +1,26 @@
+
+.build-detail-wrapper {
+	padding: 20px;
+}
+
+.case-status-icon {
+	height: 24px;
+	display: inline-block;
+	padding: 8px 12px;
+}
+
+.build-detail-row {
+ 	height: 40px;
+ 	vertical-align: middle;
+ 	display: flex;
+}
+
+.build-detail-row:hover {
+	cursor: pointer;
+	background-color: #f1f1f1;
+}
+
+.build-case-title {
+  display: inline-block;
+  line-height: 40px;
+}

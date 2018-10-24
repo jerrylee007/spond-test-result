@@ -1,8 +1,23 @@
+@import '../../common/styles/index';
+
 .dashboard-wrapper {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: center;
   display: inline-block;
   width: 100%;
+  margin: 15px 0;
+
+  border: 1px solid $spond-blue;
+
+  .client-title {
+    line-height: 30px;
+    background: $spond-blue;
+  }
+
+  .client-title:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .border-top {
@@ -13,46 +28,52 @@
   background-color: #EFF1F2;
 }
 
+.build-detail-row {
+
+}
+
 .build-detail-row:hover {
   cursor: pointer;
   background-color: #F1F1F1;
 }
 
-.build-number-col {
+.base-col {
   display: inline-block;
   border-right: 1px solid #F0F0F0;
   border-bottom: 1px solid #F0F0F0;
   border-left: 1px solid #F0F0F0;
   min-height: 30px;
   line-height: 30px;
-  width: 10%;
+}
+
+.build-number-col {
+  @extend .base-col;
+  width: 15%;
 }
 
 .build-version-col {
-  display: inline-block;
-  border-right: 1px solid #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
-  min-height: 30px;
-  line-height: 30px;
+  @extend .base-col;
   width: 20%;
 }
 
 .build-time-col {
-  display: inline-block;
-  border-right: 1px solid #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
-  min-height: 30px;
-  line-height: 30px;
+  @extend .base-col;
+
   width: 20%;
 }
 
 .build-faild-case-number-col {
-  display: inline-block;
-  border-right: 1px solid #F0F0F0;
-  border-bottom: 1px solid #F0F0F0;
-  border-right: 1px solid #F0F0F0;
-  min-height: 30px;
-  line-height: 30px;
-  width: 45%;
+  @extend .base-col;
+
+  width: 15%;
 }
 
+.build-fixed-case-number-col {
+  @extend .base-col;
+  width: 15%;
+}
+
+.build-remain-case-number-col {
+  @extend .base-col;
+  width: 15%;
+}
