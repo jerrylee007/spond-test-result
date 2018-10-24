@@ -1,0 +1,58 @@
+.dashboard-wrapper {
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+}
+
+.border-top {
+  border-top: 1px solid #F0F0F0;
+}
+
+.app-background {
+  background-color: #EFF1F2;
+}
+
+.build-detail-row:hover {
+  cursor: pointer;
+  background-color: #F1F1F1;
+}
+
+.build-number-col {
+  display: inline-block;
+  border-right: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  border-left: 1px solid #F0F0F0;
+  min-height: 30px;
+  line-height: 30px;
+  width: 10%;
+}
+
+.build-version-col {
+  display: inline-block;
+  border-right: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  min-height: 30px;
+  line-height: 30px;
+  width: 20%;
+}
+
+.build-time-col {
+  display: inline-block;
+  border-right: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  min-height: 30px;
+  line-height: 30px;
+  width: 20%;
+}
+
+.build-faild-case-number-col {
+  display: inline-block;
+  border-right: 1px solid #F0F0F0;
+  border-bottom: 1px solid #F0F0F0;
+  border-right: 1px solid #F0F0F0;
+  min-height: 30px;
+  line-height: 30px;
+  width: 45%;
+}
+

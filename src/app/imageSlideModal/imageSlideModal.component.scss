@@ -1,0 +1,49 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+.modal-header {
+  background-color: #f6f7f8;
+  padding: 10px 15px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  .modal-title {
+    font-size: 14px;
+  }
+}
+
+.modal-body {
+	text-align: center;
+	.image-wrapper {
+		width: 30%;
+		display: inline-block;
+		padding: 0 10px;
+
+		.image-title {
+			padding: 10px 0;
+		}
+
+		img {
+			width: 100%;
+		}
+	}
+}
+
+.action-button {
+	background-color: green;
+	color: white;
+	height: 50px;
+	font-size: 16px;
+	font-weight: 400;
+}
+
+.action-note {
+	font-size: 14px;
+	display: inline-block;
+	text-align: center;
+	width: 80%;
+}
+
+.modal-dialog {
+	margin-top: 70px;
+	width: 70%;
+}

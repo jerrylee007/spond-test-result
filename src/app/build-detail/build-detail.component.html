@@ -1,0 +1,12 @@
+<div  *ngIf="build"  class="build-detail-wrapper">
+    <div
+    	*ngFor="let case of build.failedData"
+    	class="build-detail-row"
+    	 (click)="showFailedCase(case)">
+      <div class="build-case-title">
+        {{case}}
+      </div>
+    </div>
+</div>
+
+<image-slide-modal #imageSlideModal></image-slide-modal>

@@ -1,16 +1,33 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { RouterModule } from '@angular/router';
+import { routes } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule }     from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { DashboardComponent }   from './dashboard/dashboard.component';
+import { BuildDetailModule }  from './build-detail';
+
+import { ModalModule } from 'ng2-bootstrap/modal';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    BuildDetailModule,
+    ModalModule.forRoot(),
+    RouterModule.forRoot(routes, { useHash: false }),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    DashboardComponent
+  ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
