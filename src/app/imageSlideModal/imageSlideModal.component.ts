@@ -54,19 +54,19 @@ export class ImageSlideModalComponent implements OnInit {
   }
 
   hasScreenshotBeenReplaced(screenshot) {
-    return this.build.replaced.includes(screenshot);
+    return this.build.replaced && this.build.replaced.includes(screenshot);
   }
 
   getResultScreenshotPath(screenshot) {
-    return CLIENT_API  + `android/results/${this.build.buildNumber}/Screenshots/result/${screenshot}`;
+    return CLIENT_API  + `android/${this.build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
   }
 
   getNewScreenshotPath(screenshot) {
-    return CLIENT_API  + `android/results/${this.build.buildNumber}/Screenshots/new/${screenshot}`;
+    return CLIENT_API  + `android/${this.build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
   }
 
   getBaseScreenshotPath(screenshot) {
-    return CLIENT_API + `android/base/${screenshot}`;
+    return CLIENT_API + `screenshots/android/base/${screenshot}`;
   }
 
   onPreviousClicked(){
@@ -85,7 +85,7 @@ export class ImageSlideModalComponent implements OnInit {
 
   onUndoReplacementClicked(screenshot) {
     this.btnUndoReplace.isSpinning = true;
-    this.service.undoReplacement(this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.undoReplacement(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
       this.btnUndoReplace.isSpinning = false;
       this.hide();
       this.onBuildUpdated.emit(results);
@@ -96,7 +96,7 @@ export class ImageSlideModalComponent implements OnInit {
 
   onReplaceClicked(screenshot) {
     this.btnReplace.isSpinning = true;
-    this.service.replaceScreenshot(this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.replaceScreenshot(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
       this.btnReplace.isSpinning = false;
       this.onNextClicked();
       this.onBuildUpdated.emit(results);

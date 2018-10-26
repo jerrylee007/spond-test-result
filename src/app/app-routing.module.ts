@@ -5,9 +5,8 @@ import { DashboardComponent }   from './dashboard/dashboard.component';
 import { BuildDetailComponent }  from './build-detail/build-detail.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'build/:id', component: BuildDetailComponent },
+  { path: '', component: DashboardComponent },
+  { path: 'build/android/:id', component: BuildDetailComponent },
 ];
 
 @NgModule({

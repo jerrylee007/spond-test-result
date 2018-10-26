@@ -19,6 +19,7 @@ export class BuildDetailComponent implements OnInit {
   imageSlideModal: ImageSlideModalComponent
 
   buildId: string;
+  client: string;
 
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
@@ -28,9 +29,11 @@ export class BuildDetailComponent implements OnInit {
     private service: ResultsService,
   ) {
 
-    this.buildId = window.location.pathname.split("/").pop();
+    var pathElements = window.location.pathname.split("/");
+    this.buildId = pathElements.pop();
+    this.client = pathElements.pop();
 
-    this.service.getResultById(this.buildId).subscribe(results=>{
+    this.service.getResultById(this.client, this.buildId).subscribe(results=>{
       this.build = results;
     });
   }
@@ -40,7 +43,7 @@ export class BuildDetailComponent implements OnInit {
   }
 
   isCaseFixed(caseName : string) {
-    return this.build.replaced.includes(caseName);
+    return this.build.replaced && this.build.replaced.includes(caseName);
   }
 
   onBuildUpdated(results) {

@@ -30,6 +30,6 @@ export class DashboardComponent implements OnInit {
   }
 
   goToBuildFailedDetails(build) {
-    this.router.navigate(['build/' + build.buildNumber]);
+    this.router.navigate(['build/android/' + build.buildNumber]);
   }
 }
