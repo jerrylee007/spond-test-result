@@ -1,26 +1,46 @@
+@import '../../common/styles/index';
 
 .build-detail-wrapper {
 	padding: 20px;
-}
+	background-color: $spond-background;
 
-.case-status-icon {
-	height: 24px;
-	display: inline-block;
-	padding: 8px 12px;
-}
+	.case-status-icon {
+		height: 24px;
+		display: absolute;
+		padding: 8px 12px;
+	}
 
-.build-detail-row {
- 	height: 40px;
- 	vertical-align: middle;
- 	display: flex;
-}
+	.build-detail-row {
+		@include spond-card-container;
+	 	vertical-align: middle;
+	 	width: 180px;
+	 	display: inline-block;
+	 	text-align: center;
+	 	margin: 5px;
 
-.build-detail-row:hover {
-	cursor: pointer;
-	background-color: #f1f1f1;
-}
+	 	background-color: #e3e3e3;
 
-.build-case-title {
-  display: inline-block;
-  line-height: 40px;
+	 	overflow: hidden;
+
+	 	.build-detail-item {
+	 		width: 100%;
+	 		min-height: 150px;
+	 	}
+
+	 	.build-detail-action {
+	 		font-size: 12px;
+	 		display: inline-block;
+	 		padding: 5px 0;
+	 	}
+	}
+
+	.build-detail-row:hover {
+		cursor: pointer;
+		border: 1px solid $spond-blue;
+	}
+
+	.build-case-title {
+	  display: inline-block;
+	  line-height: 40px;
+	}
 }

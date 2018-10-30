@@ -4,6 +4,7 @@ import {CommonModule} from '@angular/common';
 
 import { ImageSlideModalModule } from '../imageSlideModal';
 import { BuildDetailComponent } from './build-detail.component';
+import {SpinnerButtonModule} from '../../common/components/spinnerButton';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { BuildDetailComponent } from './build-detail.component';
   imports: [
     ModalModule,
     CommonModule,
-    ImageSlideModalModule
+    ImageSlideModalModule,
+    SpinnerButtonModule
   ],
   providers: [
   ],

@@ -54,19 +54,19 @@ export class ImageSlideModalComponent implements OnInit {
   }
 
   hasScreenshotBeenReplaced(screenshot) {
-    return this.build.replaced && this.build.replaced.includes(screenshot);
+    return this.service.hasScreenshotBeenReplaced(screenshot, this.build);
   }
 
   getResultScreenshotPath(screenshot) {
-    return CLIENT_API  + `android/${this.build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
+    return this.service.getResultScreenshotPath(screenshot, this.build);
   }
 
   getNewScreenshotPath(screenshot) {
-    return CLIENT_API  + `android/${this.build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
+    return this.service.getNewScreenshotPath(screenshot, this.build);
   }
 
   getBaseScreenshotPath(screenshot) {
-    return CLIENT_API + `screenshots/android/base/${screenshot}`;
+    return this.service.getBaseScreenshotPath(screenshot, this.build);
   }
 
   onPreviousClicked(){

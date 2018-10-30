@@ -1,13 +1,32 @@
 <div  *ngIf="build"  class="build-detail-wrapper">
     <div
-    	*ngFor="let case of build.failedData"
+    	*ngFor="let case of build.failedData; let i = index"
     	class="build-detail-row"
-    	 (click)="showFailedCase(case)">
-   	  <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
-   	  <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/>
-      <span class="build-case-title">
-        {{case}}
-      </span>
+    	 >
+<!--    	  <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
+   	  <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
+      <img class="build-detail-item" [src]="getResultScreenshotPath(case)" alt="" (click)="showFailedCase(case)">
+
+        <spinner-button 
+        class="build-detail-action"
+        [id]="case"
+        #btnReplace
+        buttonTheme="btn-with-shadow spond-blue"
+        spinnerTheme="spinner-white"
+        *ngIf="!isCaseFixed(case)"
+        (click)="onReplaceClicked(case, i)" aria-label="Close">
+          Pass
+        </spinner-button>
+        <spinner-button 
+        #btnReplace
+        [id]="case"
+        class="build-detail-action"
+        *ngIf="isCaseFixed(case)"
+        spinnerTheme="spinner-white"
+        buttonTheme="btn-with-shadow spond-red"
+        (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
+          Undo pass
+        </spinner-button>
     </div>
 </div>
 

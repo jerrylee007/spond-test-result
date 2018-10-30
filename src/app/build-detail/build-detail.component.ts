@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ResultsService } from '../results.service';
+
+import {SpinnerButtonComponent} from '../../common/components/spinnerButton';
 
 import {ImageSlideModalComponent} from '../imageSlideModal/imageSlideModal.component';
 declare var require: any;
@@ -17,6 +19,8 @@ export class BuildDetailComponent implements OnInit {
 
   @ViewChild('imageSlideModal')
   imageSlideModal: ImageSlideModalComponent
+  @ViewChildren('btnReplace')
+  passBtns: QueryList<SpinnerButtonComponent>
 
   buildId: string;
   client: string;
@@ -42,6 +46,10 @@ export class BuildDetailComponent implements OnInit {
 
   }
 
+  getResultScreenshotPath(screenshot) {
+    return this.service.getResultScreenshotPath(screenshot, this.build);
+  }
+
   isCaseFixed(caseName : string) {
     return this.build.replaced && this.build.replaced.includes(caseName);
   }
@@ -52,5 +60,27 @@ export class BuildDetailComponent implements OnInit {
 
   showFailedCase(caseName : string) {
     this.imageSlideModal.show(this.build, caseName);
+  }
+
+  onUndoReplacementClicked(screenshot, index) {
+    let btnUndoReplace = this.passBtns.find((btn, i)=>i == index);
+    btnUndoReplace.isSpinning = true;
+    this.service.undoReplacement(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+      btnUndoReplace.isSpinning = false;
+      this.build = results;
+    }, error=>{
+      btnUndoReplace.isSpinning = false;
+    });
+  }
+
+  onReplaceClicked(screenshot, index) {
+    let btnReplace = this.passBtns.find((btn, i)=>i == index);
+    btnReplace.isSpinning = true;
+    this.service.replaceScreenshot(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+      btnReplace.isSpinning = false;
+      this.build = results;
+    }, error=>{
+      btnReplace.isSpinning = false;
+    });
   }
 }

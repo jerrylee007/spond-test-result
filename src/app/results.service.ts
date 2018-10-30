@@ -41,4 +41,20 @@ export class ResultsService {
     }
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/undoReplace`, params);
   }
+
+  hasScreenshotBeenReplaced(screenshot:string , build: any) {
+    return build.replaced && build.replaced.includes(screenshot);
+  }
+
+  getResultScreenshotPath(screenshot:string , build: any) {
+    return CLIENT_API  + `android/${build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
+  }
+
+  getNewScreenshotPath(screenshot:string , build: any) {
+    return CLIENT_API  + `android/${build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
+  }
+
+  getBaseScreenshotPath(screenshot:string , build: any) {
+    return CLIENT_API + `screenshots/android/base/${screenshot}`;
+  }
 }
