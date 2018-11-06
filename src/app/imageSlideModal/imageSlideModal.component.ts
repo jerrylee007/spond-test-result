@@ -23,6 +23,7 @@ export class ImageSlideModalComponent implements OnInit {
   imageCandidates: any[]
   currentIndex: number
   build: any
+  client: string
 
   @Output() onBuildUpdated: EventEmitter<any> = new EventEmitter();
 
@@ -43,7 +44,8 @@ export class ImageSlideModalComponent implements OnInit {
   ngOnInit() {
   }
 
-  show(build: any, imageToShow: any) {
+  show(client: string, build: any, imageToShow: any) {
+    this.client = client;
     this.build = build;
     this.showingImage = imageToShow;
     this.imageCandidates = build.failedData;
@@ -58,15 +60,15 @@ export class ImageSlideModalComponent implements OnInit {
   }
 
   getResultScreenshotPath(screenshot) {
-    return this.service.getResultScreenshotPath(screenshot, this.build);
+    return this.service.getResultScreenshotPath(this.client, screenshot, this.build);
   }
 
   getNewScreenshotPath(screenshot) {
-    return this.service.getNewScreenshotPath(screenshot, this.build);
+    return this.service.getNewScreenshotPath(this.client, screenshot, this.build);
   }
 
   getBaseScreenshotPath(screenshot) {
-    return this.service.getBaseScreenshotPath(screenshot, this.build);
+    return this.service.getBaseScreenshotPath(this.client, screenshot, this.build);
   }
 
   onPreviousClicked(){

@@ -46,15 +46,41 @@ export class ResultsService {
     return build.replaced && build.replaced.includes(screenshot);
   }
 
-  getResultScreenshotPath(screenshot:string , build: any) {
-    return CLIENT_API  + `android/${build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
+  getResultScreenshotPath(client: string, screenshot:string , build: any) {
+    let path = undefined;
+    switch (client) {
+      case "web":
+        path = `${CLIENT_API}web/${build.buildNumber}/archive/result/${screenshot}`;
+        break;
+
+      case "android":
+        path = `${CLIENT_API}android/${build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
+        break;
+
+      default:
+        break;
+    }
+    return path;
   }
 
-  getNewScreenshotPath(screenshot:string , build: any) {
-    return CLIENT_API  + `android/${build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
+  getNewScreenshotPath(client: string, screenshot:string , build: any) {
+    let path = undefined;
+    switch (client) {
+      case "web":
+        path = `${CLIENT_API}web/${build.buildNumber}/archive/out/${screenshot}`;
+        break;
+
+      case "android":
+        path = `${CLIENT_API}android/${build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
+        break;
+  
+      default:
+        break;
+    }
+    return path;
   }
 
-  getBaseScreenshotPath(screenshot:string , build: any) {
-    return CLIENT_API + `screenshots/android/base/${screenshot}`;
+  getBaseScreenshotPath(client: string, screenshot:string , build: any) {
+    return `${CLIENT_API}screenshots/${client}/base/${screenshot}`;
   }
 }

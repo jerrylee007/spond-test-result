@@ -25,6 +25,8 @@ export class BuildDetailComponent implements OnInit {
   buildId: string;
   client: string;
 
+  noResultCase: string[] = [];
+
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
 
@@ -47,11 +49,27 @@ export class BuildDetailComponent implements OnInit {
   }
 
   getResultScreenshotPath(screenshot) {
-    return this.service.getResultScreenshotPath(screenshot, this.build);
+    return this.service.getResultScreenshotPath(this.client, screenshot, this.build);
+  }
+
+  getNewScreenshotPath(screenshot) {
+    return this.service.getNewScreenshotPath(this.client, screenshot, this.build);
+  }
+
+  getBaseScreenshotPath(screenshot) {
+    return this.service.getBaseScreenshotPath(this.client, screenshot, this.build);
   }
 
   isCaseFixed(caseName : string) {
     return this.build.replaced && this.build.replaced.includes(caseName);
+  }
+
+  isResultValid(caseName : string) {
+     return !this.noResultCase.includes(caseName);
+  }
+
+  loadImageFailed(caseName : string) {
+    this.noResultCase.push(caseName);
   }
 
   onBuildUpdated(results) {
@@ -59,7 +77,7 @@ export class BuildDetailComponent implements OnInit {
   }
 
   showFailedCase(caseName : string) {
-    this.imageSlideModal.show(this.build, caseName);
+    this.imageSlideModal.show(this.client, this.build, caseName);
   }
 
   onUndoReplacementClicked(screenshot, index) {

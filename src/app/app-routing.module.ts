@@ -6,7 +6,8 @@ import { BuildDetailComponent }  from './build-detail/build-detail.component';
 
 export const routes: Routes = [
   { path: '', component: DashboardComponent },
-  { path: 'build/android/:id', component: BuildDetailComponent },
+  { path: 'build/:client/:id', component: BuildDetailComponent },
+  { path: 'automation/build/:client/:id', component: BuildDetailComponent },
 ];
 
 @NgModule({

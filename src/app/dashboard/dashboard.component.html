@@ -11,6 +11,9 @@
    <div class="build-time-col border-top app-background">
     Time
   </div>
+   <div class="build-total-case-number-col border-top app-background">
+    Base count
+  </div>
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
   </div>
@@ -21,7 +24,7 @@
     Remain failed
   </div>
 
-    <div *ngFor="let build of androidBuilds" class="build-detail-row" (click)="goToBuildFailedDetails(build)">
+    <div *ngFor="let build of androidBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('android', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
@@ -31,14 +34,17 @@
        <div class="build-time-col">
         {{build.time}}
       </div>
+       <div class="build-total-case-number-col" >
+        {{build.baseFileCount}}
+      </div>
        <div class="build-faild-case-number-col" >
-        {{build.failedData.length}}
+        {{build.failedData ? build.failedData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}
       </div>
        <div class="build-remain-case-number-col" >
-        {{build.failedData.length - (build.replaced ? build.replaced.length : 0)}}
+        {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
       </div>
     </div>
 </div>
@@ -51,11 +57,16 @@
     Build No.
   </div>
    <div class="build-version-col border-top app-background">
-    Version
+    Reversion
   </div>
    <div class="build-time-col border-top app-background">
     Time
   </div>
+
+   <div class="build-total-case-number-col border-top app-background">
+    Base count
+  </div>
+
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
   </div>
@@ -66,24 +77,27 @@
     Remain failed
   </div>
 
-    <div *ngFor="let build of webBuilds" class="build-detail-row" (click)="goToBuildFailedDetails(build)">
+    <div *ngFor="let build of webBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('web', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
-       <div class="build-version-col">
+       <div class="build-version-col" style="font-size: 11px;">
         {{build.version}}
       </div>
        <div class="build-time-col">
         {{build.time}}
       </div>
+       <div class="build-total-case-number-col" >
+        {{build.baseFileCount}}
+      </div>
        <div class="build-faild-case-number-col" >
-        {{build.failedData.length}}
+        {{build.failedData ? build.failedData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}
       </div>
        <div class="build-remain-case-number-col" >
-        {{build.failedData.length - (build.replaced ? build.replaced.length : 0)}}
+        {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
       </div>
     </div>
 </div>
@@ -102,6 +116,9 @@
    <div class="build-time-col border-top app-background">
     Time
   </div>
+   <div class="build-total-case-number-col border-top app-background">
+    Base count
+  </div>
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
   </div>
@@ -112,7 +129,7 @@
     Remain failed
   </div>
 
-    <div *ngFor="let build of iosBuilds" class="build-detail-row" (click)="goToBuildFailedDetails(build)">
+    <div *ngFor="let build of iosBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('ios', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
@@ -122,14 +139,17 @@
        <div class="build-time-col">
         {{build.time}}
       </div>
+       <div class="build-total-case-number-col" >
+        {{build.baseFileCount}}
+      </div>
        <div class="build-faild-case-number-col" >
-        {{build.failedData.length}}
+        {{build.failedData ? build.failedData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}
       </div>
        <div class="build-remain-case-number-col" >
-        {{build.failedData.length - (build.replaced ? build.replaced.length : 0)}}
+        {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
       </div>
     </div>
 </div>

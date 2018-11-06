@@ -5,7 +5,20 @@
     	 >
 <!--    	  <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
    	  <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
-      <img class="build-detail-item" [src]="getResultScreenshotPath(case)" alt="" (click)="showFailedCase(case)">
+
+      <div class="build-detail-item" 
+            *ngIf="!isResultValid(case)"
+            (click)="showFailedCase(case)">
+          No result image
+      </div>
+
+
+      <img class="build-detail-item" 
+           [src]="getResultScreenshotPath(case)" 
+           (error)="loadImageFailed(case)" 
+           alt=""
+           *ngIf="isResultValid(case)"
+           (click)="showFailedCase(case)">
 
         <spinner-button 
         class="build-detail-action"
@@ -13,7 +26,7 @@
         #btnReplace
         buttonTheme="btn-with-shadow spond-blue"
         spinnerTheme="spinner-white"
-        *ngIf="!isCaseFixed(case)"
+        *ngIf="!isCaseFixed(case) && isResultValid(case)"
         (click)="onReplaceClicked(case, i)" aria-label="Close">
           Pass
         </spinner-button>
@@ -21,7 +34,7 @@
         #btnReplace
         [id]="case"
         class="build-detail-action"
-        *ngIf="isCaseFixed(case)"
+        *ngIf="isCaseFixed(case) && isResultValid(case)"
         spinnerTheme="spinner-white"
         buttonTheme="btn-with-shadow spond-red"
         (click)="onUndoReplacementClicked(case, i)" aria-label="Close">

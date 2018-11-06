@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
   }
 
-  goToBuildFailedDetails(build) {
-    this.router.navigate(['build/android/' + build.buildNumber]);
+  goToBuildFailedDetails(client, build) {
+    this.router.navigate([`build/${client}/${build.buildNumber}`]);
   }
 }
