@@ -1,8 +1,29 @@
 @import '../../common/styles/index';
 
 .build-detail-wrapper {
-	padding: 20px;
 	background-color: $spond-background;
+
+	.build-detail-filter-wrapper {
+		text-align: center;
+		width: 100%;
+		background: white;
+		
+
+		.build-detail-filter-title {
+			font-size: 18px;
+		}
+
+		.build-detail-filter-dropdown-item {
+			width: 100%;
+			display: inline-block;
+			padding: 5px 15px;
+		}
+
+		.build-detail-filter-dropdown-item:hover {
+			cursor: pointer;
+			background:  #F1F1F1;
+		}
+	}
 
 	.case-status-icon {
 		height: 24px;
@@ -10,39 +31,50 @@
 		padding: 8px 12px;
 	}
 
-	.build-detail-row {
-		@include spond-card-container;
-	 	vertical-align: middle;
-	 	width: 180px;
-	 	display: inline-block;
-	 	text-align: center;
-	 	margin: 5px;
+	.build-detail-content-wrapper {
+		padding: 20px;
 
-	 	background-color: #e3e3e3;
+		.build-detail-row {
+			@include spond-card-container;
+		 	vertical-align: middle;
+		 	width: 180px;
+		 	display: inline-block;
+		 	text-align: center;
+		 	margin: 5px;
 
-	 	overflow: hidden;
+		 	background-color: #e3e3e3;
 
-	 	.build-detail-item {
-	 		width: 100%;
-	 		min-height: 285px;
-			line-height: 285px;
-    		background: white;
-	 	}
+		 	overflow: hidden;
 
-	 	.build-detail-action {
-	 		font-size: 12px;
-	 		display: inline-block;
-	 		padding: 5px 0;
-	 	}
-	}
+		 	.build-detail-item-title {
+		 		width: 100%;
+		 		font-size: 10px;
+		 		padding: 5px;
+		 		word-wrap: break-word;
+		 	}
 
-	.build-detail-row:hover {
-		cursor: pointer;
-		border: 1px solid $spond-blue;
-	}
+		 	.build-detail-item {
+		 		width: 100%;
+		 		min-height: 285px;
+				line-height: 285px;
+	    		background: white;
+		 	}
 
-	.build-case-title {
-	  display: inline-block;
-	  line-height: 40px;
+		 	.build-detail-action {
+		 		font-size: 12px;
+		 		display: inline-block;
+		 		padding: 5px 0;
+		 	}
+		}
+
+		.build-detail-row:hover {
+			cursor: pointer;
+			border: 1px solid $spond-blue;
+		}
+
+		.build-case-title {
+		  display: inline-block;
+		  line-height: 40px;
+		}
 	}
 }

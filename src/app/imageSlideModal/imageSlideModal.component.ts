@@ -18,6 +18,8 @@ export class ImageSlideModalComponent implements OnInit {
   btnReplace: SpinnerButtonComponent
   @ViewChild('btnUndoReplace')
   btnUndoReplace: SpinnerButtonComponent
+  @ViewChild('btnRemove')
+  btnRemove: SpinnerButtonComponent
 
   showingImage: any
   imageCandidates: any[]
@@ -107,6 +109,16 @@ export class ImageSlideModalComponent implements OnInit {
     });
   }
 
+   onRemoveBaseeClicked(screenshot) {
+    this.btnRemove.isSpinning = true;
+    this.service.removeBaseScreenshot(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+      this.btnRemove.isSpinning = false;
+      this.onBuildUpdated.emit(results);
+      this.hide();
+    }, error=>{
+      this.btnRemove.isSpinning = false;
+    });
+  }
 
   hide() {
     this.modal.hide()

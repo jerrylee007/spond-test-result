@@ -30,9 +30,15 @@
           </div>
       </div>
       <div class="modal-footer">
-        <div class="action-note">
-          You can use arrow keys to navigate as well. 
-        </div>
+        <spinner-button 
+        #btnRemove
+        class="remove-base-btn"
+        buttonTheme="btn-with-shadow spond-big-red"
+        spinnerTheme="spinner-white"
+        (click)="onRemoveBaseeClicked(showingImage)" aria-label="Close">
+          Remove base image
+        </spinner-button>
+
         <spinner-button 
         #btnReplace
         buttonTheme="btn-with-shadow spond-big-blue"

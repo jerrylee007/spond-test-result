@@ -1,46 +1,71 @@
 <div  *ngIf="build"  class="build-detail-wrapper">
-    <div
-    	*ngFor="let case of build.failedData; let i = index"
-    	class="build-detail-row"
-    	 >
-<!--    	  <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
-   	  <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
 
-      <div class="build-detail-item" 
-            *ngIf="!isResultValid(case)"
-            (click)="showFailedCase(case)">
-          No result image
+    <div ngbDropdown class="build-detail-filter-wrapper">
+      <div class="btn btn-outline-primary build-detail-filter-title" 
+            id="dropdownBasic1" 
+            ngbDropdownToggle>
+        {{currentFilter}}
       </div>
-
-
-      <img class="build-detail-item" 
-           [src]="getResultScreenshotPath(case)" 
-           (error)="loadImageFailed(case)" 
-           alt=""
-           *ngIf="isResultValid(case)"
-           (click)="showFailedCase(case)">
-
-        <spinner-button 
-        class="build-detail-action"
-        [id]="case"
-        #btnReplace
-        buttonTheme="btn-with-shadow spond-blue"
-        spinnerTheme="spinner-white"
-        *ngIf="!isCaseFixed(case) && isResultValid(case)"
-        (click)="onReplaceClicked(case, i)" aria-label="Close">
-          Pass
-        </spinner-button>
-        <spinner-button 
-        #btnReplace
-        [id]="case"
-        class="build-detail-action"
-        *ngIf="isCaseFixed(case) && isResultValid(case)"
-        spinnerTheme="spinner-white"
-        buttonTheme="btn-with-shadow spond-red"
-        (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
-          Undo pass
-        </spinner-button>
+      <span class="caret float-right"></span>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedData.length}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FIXED}} ({{build.replaced ? build.replaced.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.BASE)">{{BUILD_DETAIL_FILTER_TYPE.BASE}} ({{baseScreenshots.length}})</div>
+      </div>
     </div>
+
+    <div class="build-detail-content-wrapper">
+        <div
+            *ngFor="let case of casesToShow; let i = index"
+            class="build-detail-row"
+             >
+    <!--          <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
+          <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
+
+          <div class="build-detail-item-title">
+              {{case}}
+          </div>
+
+
+          <div class="build-detail-item" 
+                *ngIf="!isResultValid(case)"
+                (click)="showFailedCase(case)">
+              No result image
+          </div>
+
+
+          <img class="build-detail-item" 
+               [src]="getResultScreenshotPath(case)" 
+               (error)="loadImageFailed(case)" 
+               alt=""
+               *ngIf="isResultValid(case)"
+               (click)="showFailedCase(case)">
+
+            <spinner-button 
+            class="build-detail-action"
+            [id]="case"
+            #btnReplace
+            buttonTheme="btn-with-shadow spond-blue"
+            spinnerTheme="spinner-white"
+            *ngIf="!isCaseFixed(case) && isResultValid(case)"
+            (click)="onReplaceClicked(case, i)" aria-label="Close">
+              Pass
+            </spinner-button>
+            <spinner-button 
+            #btnReplace
+            [id]="case"
+            class="build-detail-action"
+            *ngIf="isCaseFixed(case) && isResultValid(case)"
+            spinnerTheme="spinner-white"
+            buttonTheme="btn-with-shadow spond-red"
+            (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
+              Undo pass
+            </spinner-button>
+        </div>        
+
+
+    </div>
+
 </div>
 
 <image-slide-modal #imageSlideModal

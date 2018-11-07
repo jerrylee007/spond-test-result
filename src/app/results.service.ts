@@ -28,11 +28,22 @@ export class ResultsService {
     return this.http.get<any[]>(CLIENT_API + `build/${client}/${buildId}`);
   }
 
+  getBaseScreenshots(client: string) {
+    return this.http.get(`${CLIENT_API}${client}/base`);
+  }
+
   replaceScreenshot(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot
     }
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/replace`, params);
+  }
+
+  removeBaseScreenshot(client: string, buildId: string, screenshot: string) {
+    let params = {
+      screenshot: screenshot
+    }
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/removeBase`, params);
   }
 
   undoReplacement(client: string, buildId: string, screenshot: string) {

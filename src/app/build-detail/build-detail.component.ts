@@ -8,6 +8,13 @@ import {SpinnerButtonComponent} from '../../common/components/spinnerButton';
 import {ImageSlideModalComponent} from '../imageSlideModal/imageSlideModal.component';
 declare var require: any;
 
+
+export enum BUILD_DETAIL_FILTER_TYPE {
+  FAILED = <any>"Failed screenshots",
+  BASE = <any>"Base screenshots",
+  FIXED = <any>"Fixed screenshots",
+}
+
 @Component({
   selector: 'build-detail',
   templateUrl: './build-detail.component.html',
@@ -25,10 +32,17 @@ export class BuildDetailComponent implements OnInit {
   buildId: string;
   client: string;
 
+  public BUILD_DETAIL_FILTER_TYPE = BUILD_DETAIL_FILTER_TYPE;
+
+  casesToShow: string[] = [];
+  baseScreenshots: any = [];
+  currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
+
   noResultCase: string[] = [];
 
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
+
 
   constructor(
     private route: ActivatedRoute,
@@ -41,11 +55,30 @@ export class BuildDetailComponent implements OnInit {
 
     this.service.getResultById(this.client, this.buildId).subscribe(results=>{
       this.build = results;
+      this.onFilterSelected(this.currentFilter);
+    });
+
+    this.service.getBaseScreenshots(this.client).subscribe(results=>{
+      this.baseScreenshots = results;
     });
   }
 
   ngOnInit() {
 
+  }
+
+  onFilterSelected(filter) {
+    this.currentFilter = filter;
+
+    if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED) {
+       this.casesToShow = this.build.failedData;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.FIXED) {
+       this.casesToShow = this.build.replaced;
+    }
+    else {
+       this.casesToShow = this.baseScreenshots;
+    }
   }
 
   getResultScreenshotPath(screenshot) {
