@@ -17,6 +17,9 @@
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
   </div>
+   <div class="build-ignored-case-number-col border-top app-background">
+    Ignored
+  </div>
    <div class="build-fixed-case-number-col border-top app-background">
     Fixed failed
   </div>
@@ -39,6 +42,9 @@
       </div>
        <div class="build-faild-case-number-col" >
         {{build.failedData ? build.failedData.length : 0}}
+      </div>
+       <div class="build-ignored-case-number-col" >
+        {{build.ignoredData ? build.ignoredData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}
@@ -66,9 +72,11 @@
    <div class="build-total-case-number-col border-top app-background">
     Base count
   </div>
-
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
+  </div>
+   <div class="build-ignored-case-number-col border-top app-background">
+    Ignored
   </div>
    <div class="build-fixed-case-number-col border-top app-background">
     Fixed failed
@@ -92,6 +100,9 @@
       </div>
        <div class="build-faild-case-number-col" >
         {{build.failedData ? build.failedData.length : 0}}
+      </div>
+       <div class="build-ignored-case-number-col" >
+        {{build.ignoredData ? build.ignoredData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}
@@ -122,6 +133,9 @@
    <div class="build-faild-case-number-col border-top app-background">
     Original failed
   </div>
+   <div class="build-ignored-case-number-col border-top app-background">
+    Ignored
+  </div>
    <div class="build-fixed-case-number-col border-top app-background">
     Fixed failed
   </div>
@@ -144,6 +158,9 @@
       </div>
        <div class="build-faild-case-number-col" >
         {{build.failedData ? build.failedData.length : 0}}
+      </div>
+       <div class="build-ignored-case-number-col" >
+        {{build.ignoredData ? build.ignoredData.length : 0}}
       </div>
        <div class="build-fixed-case-number-col" >
         {{build.replaced ? build.replaced.length : 0}}

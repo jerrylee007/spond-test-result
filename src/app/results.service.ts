@@ -65,7 +65,7 @@ export class ResultsService {
         break;
 
       case "android":
-        path = `${CLIENT_API}android/${build.buildNumber}/archive/client3.1/testng/Screenshots/result/${screenshot}`;
+        path = `${CLIENT_API}android/${build.buildNumber}/archive/result/${screenshot}`;
         break;
 
       default:
@@ -82,7 +82,7 @@ export class ResultsService {
         break;
 
       case "android":
-        path = `${CLIENT_API}android/${build.buildNumber}/archive/client3.1/testng/Screenshots/new/${screenshot}`;
+        path = `${CLIENT_API}android/${build.buildNumber}/archive/new/${screenshot}`;
         break;
   
       default:

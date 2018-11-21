@@ -13,6 +13,7 @@ export enum BUILD_DETAIL_FILTER_TYPE {
   FAILED = <any>"Failed screenshots",
   BASE = <any>"Base screenshots",
   FIXED = <any>"Fixed screenshots",
+  IGNORED = <any>"Ignored screenshots"
 }
 
 @Component({
@@ -75,6 +76,9 @@ export class BuildDetailComponent implements OnInit {
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FIXED) {
        this.casesToShow = this.build.replaced;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.IGNORED) {
+       this.casesToShow = this.build.ignoredData;
     }
     else {
        this.casesToShow = this.baseScreenshots;

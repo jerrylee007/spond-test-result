@@ -4,11 +4,17 @@
       <div class="btn btn-outline-primary build-detail-filter-title" 
             id="dropdownBasic1" 
             ngbDropdownToggle>
-        {{currentFilter}}
+        <span>{{currentFilter}}</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED"> ({{build.failedData ? build.failedData.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FIXED"> ({{build.replaced ? build.replaced.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.IGNORED"> ({{build.ignoredData ? build.ignoredData.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"> ({{baseScreenshots.length}})</span>
+        
       </div>
       <span class="caret float-right"></span>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedData.length}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedData ? build.failedData.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.IGNORED)">{{BUILD_DETAIL_FILTER_TYPE.IGNORED}} ({{build.ignoredData ? build.ignoredData.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FIXED}} ({{build.replaced ? build.replaced.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.BASE)">{{BUILD_DETAIL_FILTER_TYPE.BASE}} ({{baseScreenshots.length}})</div>
       </div>
@@ -34,11 +40,18 @@
           </div>
 
 
+        <img class="build-detail-item" 
+               [src]="getBaseScreenshotPath(case)" 
+               (error)="loadImageFailed(case)" 
+               alt=""
+               *ngIf="isResultValid(case) && currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"
+               (click)="showFailedCase(case)">
+
           <img class="build-detail-item" 
                [src]="getResultScreenshotPath(case)" 
                (error)="loadImageFailed(case)" 
                alt=""
-               *ngIf="isResultValid(case)"
+               *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isResultValid(case)"
                (click)="showFailedCase(case)">
 
             <spinner-button 
@@ -47,7 +60,8 @@
             #btnReplace
             buttonTheme="btn-with-shadow spond-blue"
             spinnerTheme="spinner-white"
-            *ngIf="!isCaseFixed(case) && isResultValid(case)"
+            *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
+            [isDisabled]="!isResultValid(case)"
             (click)="onReplaceClicked(case, i)" aria-label="Close">
               Pass
             </spinner-button>
@@ -55,9 +69,10 @@
             #btnReplace
             [id]="case"
             class="build-detail-action"
-            *ngIf="isCaseFixed(case) && isResultValid(case)"
+            *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isCaseFixed(case)"
             spinnerTheme="spinner-white"
             buttonTheme="btn-with-shadow spond-red"
+            [isDisabled]="!isResultValid(case)"
             (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
               Undo pass
             </spinner-button>

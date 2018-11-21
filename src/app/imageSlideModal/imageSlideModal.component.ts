@@ -50,7 +50,7 @@ export class ImageSlideModalComponent implements OnInit {
     this.client = client;
     this.build = build;
     this.showingImage = imageToShow;
-    this.imageCandidates = build.failedData;
+    this.imageCandidates = build.failedData ? build.failedData : [];
 
     this.currentIndex = this.imageCandidates.findIndex(image => image.fileName == imageToShow.fileName);
 
