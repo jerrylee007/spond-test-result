@@ -36,6 +36,9 @@ export class BuildDetailComponent implements OnInit {
   public BUILD_DETAIL_FILTER_TYPE = BUILD_DETAIL_FILTER_TYPE;
 
   casesToShow: string[] = [];
+  caseCategories: any[] = [];
+
+
   baseScreenshots: any = [];
   currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
 
@@ -82,6 +85,26 @@ export class BuildDetailComponent implements OnInit {
     }
     else {
        this.casesToShow = this.baseScreenshots;
+    }
+
+    var categoryDict = {};
+    this.caseCategories = [];
+
+    for (let caseName of this.casesToShow) {
+      var category = caseName.split("_")[0];
+
+      if (!categoryDict[category]) {
+        categoryDict[category] = [];
+      }
+
+      categoryDict[category].push(caseName)
+    }
+
+    for (let category in categoryDict) {
+      this.caseCategories.push({
+        name:category,
+        cases:categoryDict[category]
+      });
     }
   }
 

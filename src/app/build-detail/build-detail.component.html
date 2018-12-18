@@ -21,9 +21,13 @@
     </div>
 
     <div class="build-detail-content-wrapper">
+      <div *ngFor="let category of caseCategories; let i = index">
+        <div class="build-detail-section-title">
+          {{category.name}}
+        </div>
         <div
-            *ngFor="let case of casesToShow; let i = index"
-            class="build-detail-row"
+            *ngFor="let case of category.cases; let i = index"
+            class="build-detail-section-content"
              >
     <!--          <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
           <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
@@ -77,7 +81,7 @@
               Undo pass
             </spinner-button>
         </div>        
-
+      </div>
 
     </div>
 
