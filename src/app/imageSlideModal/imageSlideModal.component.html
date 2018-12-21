@@ -15,7 +15,7 @@
             <div class="image-title" *ngIf="baseImageInvalid">
               New case
             </div>
-            <img [src]="getBaseScreenshotPath(showingImage)" alt="" (error)="loadBaseImageFailed()">
+            <img [src]="getBaseScreenshotPath()" (click)="openBaseImage()" (error)="loadBaseImageFailed()">
           </div>
 
           <div class="image-wrapper">
@@ -25,7 +25,7 @@
             <div class="image-title" *ngIf="resultImageInvalid">
               Case not run
             </div>
-            <img [src]="getResultScreenshotPath(showingImage)" alt="" (error)="loadResultImageFailed()">
+            <img [src]="getResultScreenshotPath()" alt="" (error)="loadResultImageFailed()" (click)="openResultImage()">
           </div>
 
           <div class="image-wrapper">
@@ -35,7 +35,7 @@
             <div class="image-title" *ngIf="newImageInvalid">
               Case not run
             </div>
-            <img [src]="getNewScreenshotPath(showingImage)" alt="" (error)="loadNewImageFailed()">
+            <img (click)="openNewImage()" [src]="getNewScreenshotPath()" alt="" (error)="loadNewImageFailed()">
           </div>
       </div>
       <div class="modal-footer">

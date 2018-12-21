@@ -77,20 +77,32 @@ export class ImageSlideModalComponent implements OnInit {
     this.newImageInvalid = true
   }
 
-  hasScreenshotBeenReplaced(screenshot) {
-    return this.service.hasScreenshotBeenReplaced(screenshot, this.build);
+  openBaseImage() {
+    window.open(this.getBaseScreenshotPath());
   }
 
-  getResultScreenshotPath(screenshot) {
-    return this.service.getResultScreenshotPath(this.client, screenshot, this.build);
+  openResultImage() {
+    window.open(this.getResultScreenshotPath());
   }
 
-  getNewScreenshotPath(screenshot) {
-    return this.service.getNewScreenshotPath(this.client, screenshot, this.build);
+  openNewImage() {
+    window.open(this.getNewScreenshotPath());
   }
 
-  getBaseScreenshotPath(screenshot) {
-    return this.service.getBaseScreenshotPath(this.client, screenshot, this.build);
+  hasScreenshotBeenReplaced() {
+    return this.service.hasScreenshotBeenReplaced(this.showingImage, this.build);
+  }
+
+  getResultScreenshotPath() {
+    return this.service.getResultScreenshotPath(this.client, this.showingImage, this.build);
+  }
+
+  getNewScreenshotPath() {
+    return this.service.getNewScreenshotPath(this.client, this.showingImage, this.build);
+  }
+
+  getBaseScreenshotPath() {
+    return this.service.getBaseScreenshotPath(this.client, this.showingImage, this.build);
   }
 
   onPreviousClicked(){
