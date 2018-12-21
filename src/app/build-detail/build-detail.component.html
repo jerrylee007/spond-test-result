@@ -38,11 +38,16 @@
 
 
           <div class="build-detail-item" 
-                *ngIf="!isResultValid(case)"
+                *ngIf="isResultFailed(case)"
                 (click)="showFailedCase(case)">
-              No result image
+              Case not run
           </div>
 
+          <div class="build-detail-item" 
+                *ngIf="isBaseFailed(case)"
+                (click)="showFailedCase(case)">
+              New Case
+          </div>
 
         <img class="build-detail-item" 
                [src]="getBaseScreenshotPath(case)" 
@@ -64,7 +69,7 @@
             #btnReplace
             buttonTheme="btn-with-shadow spond-blue"
             spinnerTheme="spinner-white"
-            *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
+            *ngIf="!isResultFailed(case) && currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
             [isDisabled]="!isResultValid(case)"
             (click)="onReplaceClicked(case, i)" aria-label="Close">
               Pass

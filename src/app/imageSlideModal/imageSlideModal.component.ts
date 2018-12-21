@@ -27,6 +27,10 @@ export class ImageSlideModalComponent implements OnInit {
   build: any
   client: string
 
+  baseImageInvalid: Boolean;
+  resultImageInvalid: Boolean;
+  newImageInvalid: Boolean;
+
   @Output() onBuildUpdated: EventEmitter<any> = new EventEmitter();
 
   @HostListener('document:keydown', ['$event'])
@@ -44,6 +48,9 @@ export class ImageSlideModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.baseImageInvalid = false
+    this.resultImageInvalid = false
+    this.newImageInvalid = false
   }
 
   show(client: string, build: any, imageToShow: any) {
@@ -55,6 +62,19 @@ export class ImageSlideModalComponent implements OnInit {
     this.currentIndex = this.imageCandidates.findIndex(image => image.fileName == imageToShow.fileName);
 
     this.modal.show()
+  }
+
+
+  loadBaseImageFailed() {
+    this.baseImageInvalid = true
+  }
+
+  loadResultImageFailed() {
+    this.resultImageInvalid = true
+  }
+
+  loadNewImageFailed() {
+    this.newImageInvalid = true
   }
 
   hasScreenshotBeenReplaced(screenshot) {

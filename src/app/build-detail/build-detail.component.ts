@@ -43,6 +43,7 @@ export class BuildDetailComponent implements OnInit {
   currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
 
   noResultCase: string[] = [];
+  noBaseCase: string[] = [];
 
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
@@ -124,12 +125,25 @@ export class BuildDetailComponent implements OnInit {
     return this.build.replaced && this.build.replaced.includes(caseName);
   }
 
+  isResultFailed(caseName : string) {
+     return this.noResultCase.includes(caseName);
+  }
+
+  isBaseFailed(caseName : string) {
+     return this.noBaseCase.includes(caseName);
+  }
+
   isResultValid(caseName : string) {
-     return !this.noResultCase.includes(caseName);
+    return !this.isResultFailed(caseName) && !this.isBaseFailed(caseName);
   }
 
   loadImageFailed(caseName : string) {
-    this.noResultCase.push(caseName);
+    if (!this.baseScreenshots.includes(caseName)) {
+      this.noBaseCase.push(caseName);
+    }
+    else {
+      this.noResultCase.push(caseName);
+    }
   }
 
   onBuildUpdated(results) {

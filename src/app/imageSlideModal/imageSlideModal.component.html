@@ -9,24 +9,33 @@
       </div>
       <div class="modal-body">
           <div class="image-wrapper">
-            <div class="image-title">
+            <div class="image-title" *ngIf="!baseImageInvalid">
               Base
             </div>
-            <img [src]="getBaseScreenshotPath(showingImage)" alt="">
+            <div class="image-title" *ngIf="baseImageInvalid">
+              New case
+            </div>
+            <img [src]="getBaseScreenshotPath(showingImage)" alt="" (error)="loadBaseImageFailed()">
           </div>
 
           <div class="image-wrapper">
-            <div class="image-title">
+            <div class="image-title" *ngIf="!resultImageInvalid">
               Diff
             </div>
-            <img [src]="getResultScreenshotPath(showingImage)" alt="">
+            <div class="image-title" *ngIf="resultImageInvalid">
+              Case not run
+            </div>
+            <img [src]="getResultScreenshotPath(showingImage)" alt="" (error)="loadResultImageFailed()">
           </div>
 
           <div class="image-wrapper">
-            <div class="image-title">
+            <div class="image-title" *ngIf="!newImageInvalid">
               New
             </div>
-            <img [src]="getNewScreenshotPath(showingImage)" alt="">
+            <div class="image-title" *ngIf="newImageInvalid">
+              Case not run
+            </div>
+            <img [src]="getNewScreenshotPath(showingImage)" alt="" (error)="loadNewImageFailed()">
           </div>
       </div>
       <div class="modal-footer">
@@ -35,6 +44,7 @@
         class="remove-base-btn"
         buttonTheme="btn-with-shadow spond-big-red"
         spinnerTheme="spinner-white"
+        *ngIf="!baseImageInvalid"
         (click)="onRemoveBaseeClicked(showingImage)" aria-label="Close">
           Remove base image
         </spinner-button>
@@ -43,7 +53,7 @@
         #btnReplace
         buttonTheme="btn-with-shadow spond-big-blue"
         spinnerTheme="spinner-white"
-        *ngIf="!hasScreenshotBeenReplaced(showingImage)"
+        *ngIf="!resultImageInvalid && !hasScreenshotBeenReplaced(showingImage)"
         (click)="onReplaceClicked(showingImage)" aria-label="Close">
           Make this case pass
         </spinner-button>
