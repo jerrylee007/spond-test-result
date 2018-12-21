@@ -13,6 +13,9 @@ import { DashboardComponent }   from './dashboard/dashboard.component';
 import { BuildDetailModule }  from './build-detail';
 import { SpondCommonModule }  from '../common/common.module';
 
+import {SpinnerButtonModule} from '../common/components/spinnerButton';
+import {ConfirmModalModule} from '../common/components/confirmModal';
+
 import { ModalModule } from 'ng2-bootstrap/modal';
 
 @NgModule({
@@ -23,6 +26,8 @@ import { ModalModule } from 'ng2-bootstrap/modal';
     HttpClientModule,
     BuildDetailModule,
     SpondCommonModule,
+    SpinnerButtonModule,
+    ConfirmModalModule,
     ModalModule.forRoot(),
     RouterModule.forRoot(routes, { useHash: false }),
   ],

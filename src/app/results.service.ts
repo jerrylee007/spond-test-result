@@ -7,6 +7,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 //export const CLIENT_API = 'http://localhost:8000/'
 export const CLIENT_API = 'http://118.24.41.169:8000/'
 
+const LOCAL_BUILD_ID = '99999'
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -39,6 +41,10 @@ export class ResultsService {
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/replace`, params);
   }
 
+  removeBuild(client: string, buildId: string) {
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/remove`, {});
+  }
+
   removeBaseScreenshot(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot
@@ -59,35 +65,54 @@ export class ResultsService {
 
   getResultScreenshotPath(client: string, screenshot:string , build: any) {
     let path = undefined;
-    switch (client) {
-      case "web":
-        path = `${CLIENT_API}web/${build.buildNumber}/archive/result/${screenshot}`;
-        break;
+    if (build.buildNumber == LOCAL_BUILD_ID) {
+        path = `${CLIENT_API}screenshots/${client}/result/${screenshot}`
+    }
+    else {
+      switch (client) {
+        case "ios":
+          path = `${CLIENT_API}ios/${build.buildNumber}/archive/result/${screenshot}`;
+          break;
+        case "web":
+          path = `${CLIENT_API}web/${build.buildNumber}/archive/result/${screenshot}`;
+          break;
 
-      case "android":
-        path = `${CLIENT_API}android/${build.buildNumber}/archive/result/${screenshot}`;
-        break;
-
-      default:
-        break;
+        case "android":
+          path = `${CLIENT_API}android/${build.buildNumber}/archive/result/${screenshot}`;
+          break;
+    
+        default:
+          break;
+      }  
     }
     return path;
   }
 
   getNewScreenshotPath(client: string, screenshot:string , build: any) {
     let path = undefined;
-    switch (client) {
-      case "web":
-        path = `${CLIENT_API}web/${build.buildNumber}/archive/out/${screenshot}`;
-        break;
 
-      case "android":
-        path = `${CLIENT_API}android/${build.buildNumber}/archive/new/${screenshot}`;
-        break;
-  
-      default:
-        break;
+    if (build.buildNumber == LOCAL_BUILD_ID) {
+        path = `${CLIENT_API}screenshots/${client}/new/${screenshot}`
     }
+    else {
+      switch (client) {
+        case "ios":
+          path = `${CLIENT_API}ios/${build.buildNumber}/archive/new/${screenshot}`;
+          break;
+        case "web":
+          path = `${CLIENT_API}web/${build.buildNumber}/archive/new/${screenshot}`;
+          break;
+
+        case "android":
+          path = `${CLIENT_API}android/${build.buildNumber}/archive/new/${screenshot}`;
+          break;
+    
+        default:
+          break;
+      }  
+    }
+
+
     return path;
   }
 

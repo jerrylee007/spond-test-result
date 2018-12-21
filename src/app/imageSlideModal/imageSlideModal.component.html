@@ -25,7 +25,7 @@
             <div class="image-title" *ngIf="resultImageInvalid">
               Case not run
             </div>
-            <img [src]="getResultScreenshotPath()" alt="" (error)="loadResultImageFailed()" (click)="openResultImage()">
+            <img [src]="getResultScreenshotPath()" alt="" (click)="openResultImage()">
           </div>
 
           <div class="image-wrapper">

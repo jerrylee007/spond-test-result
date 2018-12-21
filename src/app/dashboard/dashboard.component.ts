@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ResultsService } from '../results.service';
 
 import {Router} from '@angular/router';
+
+import {ConfirmModalComponent, DeferredClickEvent} from '../../common/components/confirmModal';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -9,24 +12,49 @@ import {Router} from '@angular/router';
   styleUrls: [ './dashboard.component.scss' ]
 })
 export class DashboardComponent implements OnInit {
-  androidBuilds: any
-  iosBuilds: any
-  webBuilds: any
+  @ViewChild('confirmRemoveModal')
+  confirmRemoveModal: ConfirmModalComponent;
+
+  allBuilds: any = {}
+
+  removingBuild: any
+
 
   constructor(private service: ResultsService,
             private router: Router) {
     this.service.getAllResults('android').subscribe(results=>{
-      this.androidBuilds = results;
+      this.allBuilds.android = results;
     });
     this.service.getAllResults('ios').subscribe(results=>{
-      this.iosBuilds = results;
+      this.allBuilds.ios = results;
     });
     this.service.getAllResults('web').subscribe(results=>{
-      this.webBuilds = results;
+      this.allBuilds.web = results;
     });
   }
 
   ngOnInit() {
+  }
+
+  onRemoveBuild(build: any) {
+    this.confirmRemoveModal.show(
+        'Confirm Remove',
+        'Are you sure you want to remove this build, you will lose it forever?',
+        'Cancel',
+        'Remove',
+        true
+        )
+    this.removingBuild = build;
+  }
+
+  onConfirmRemoveClicked(event: DeferredClickEvent) {
+    this.service.removeBuild(this.removingBuild.client, this.removingBuild.buildNumber).subscribe(results=>{
+      this.allBuilds[this.removingBuild.client] = results;
+      event.success();
+    }, err=>{
+       event.success();
+    });
+
   }
 
   goToBuildFailedDetails(client, build) {

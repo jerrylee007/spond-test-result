@@ -1,3 +1,4 @@
+@import '../../styles/index';
 .confirm-modal-component {
 
 }
@@ -7,5 +8,11 @@
 
 	.modal-body {
 		text-align: left;
+	}
+
+	.modal-footer {
+		button {
+			margin-right: 10px;
+		}
 	}
 }

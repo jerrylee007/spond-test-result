@@ -26,12 +26,14 @@
    <div class="build-remain-case-number-col border-top app-background">
     Remain failed
   </div>
-
-    <div *ngFor="let build of androidBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('android', build)">
+  <div class="action-col border-top app-background">
+    Action
+  </div>
+    <div *ngFor="let build of allBuilds.android" class="build-detail-row" (click)="goToBuildFailedDetails('android', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
-       <div class="build-version-col">
+       <div class="build-version-col" style="font-size: 11px;">
         {{build.version}}
       </div>
        <div class="build-time-col">
@@ -51,6 +53,19 @@
       </div>
        <div class="build-remain-case-number-col" >
         {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
+      </div>
+       <div class="action-col">
+            <spinner-button 
+            style="z-index: 999;"
+            #btnReplace
+            [id]="case"
+            class="build-detail-action"
+            spinnerTheme="spinner-white"
+            buttonTheme="btn-with-shadow spond-small-red"
+            [isDisabled]="!build.isRemoving"
+            (click)="onRemoveBuild(build);$event.stopPropagation();" aria-label="Close">
+              Remove
+            </spinner-button>
       </div>
     </div>
 </div>
@@ -84,8 +99,11 @@
    <div class="build-remain-case-number-col border-top app-background">
     Remain failed
   </div>
+  <div class="action-col border-top app-background">
+    Action
+  </div>
 
-    <div *ngFor="let build of webBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('web', build)">
+    <div *ngFor="let build of allBuilds.web" class="build-detail-row" (click)="goToBuildFailedDetails('web', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
@@ -109,6 +127,18 @@
       </div>
        <div class="build-remain-case-number-col" >
         {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
+      </div>
+       <div class="action-col">
+            <spinner-button 
+            #btnReplace
+            [id]="case"
+            class="build-detail-action"
+            spinnerTheme="spinner-white"
+            buttonTheme="btn-with-shadow spond-small-red"
+            [isDisabled]="!build.isRemoving"
+            (click)="onRemoveBuild(build);$event.stopPropagation();" aria-label="Close">
+              Remove
+            </spinner-button>
       </div>
     </div>
 </div>
@@ -142,8 +172,11 @@
    <div class="build-remain-case-number-col border-top app-background">
     Remain failed
   </div>
+  <div class="action-col border-top app-background">
+    Action
+  </div>
 
-    <div *ngFor="let build of iosBuilds" class="build-detail-row" (click)="goToBuildFailedDetails('ios', build)">
+    <div *ngFor="let build of allBuilds.ios" class="build-detail-row" (click)="goToBuildFailedDetails('ios', build)">
       <div class="build-number-col">
         {{build.buildNumber}}
       </div>
@@ -168,6 +201,20 @@
        <div class="build-remain-case-number-col" >
         {{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}
       </div>
+       <div class="action-col">
+            <spinner-button 
+            #btnReplace
+            [id]="case"
+            class="build-detail-action"
+            spinnerTheme="spinner-white"
+            buttonTheme="btn-with-shadow spond-small-red"
+            [isDisabled]="!build.isRemoving"
+            (click)="onRemoveBuild(build);$event.stopPropagation();" aria-label="Close">
+              Remove
+            </spinner-button>
+      </div>
     </div>
 </div>
+<confirm-modal #confirmRemoveModal
+(onConfirm)="onConfirmRemoveClicked($event)"></confirm-modal>
 
