@@ -93,6 +93,7 @@ export class BuildDetailComponent implements OnInit {
 
     for (let caseName of this.casesToShow) {
       var category = caseName.split("_")[0];
+      category = category.split(".")[0];
 
       if (!categoryDict[category]) {
         categoryDict[category] = [];
@@ -157,7 +158,7 @@ export class BuildDetailComponent implements OnInit {
   onUndoReplacementClicked(screenshot, index) {
     let btnUndoReplace = this.passBtns.find((btn, i)=>i == index);
     btnUndoReplace.isSpinning = true;
-    this.service.undoReplacement(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.undoReplacement(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
       btnUndoReplace.isSpinning = false;
       this.build = results;
     }, error=>{
@@ -168,7 +169,7 @@ export class BuildDetailComponent implements OnInit {
   onReplaceClicked(screenshot, index) {
     let btnReplace = this.passBtns.find((btn, i)=>i == index);
     btnReplace.isSpinning = true;
-    this.service.replaceScreenshot(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.replaceScreenshot(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
       btnReplace.isSpinning = false;
       this.build = results;
     }, error=>{

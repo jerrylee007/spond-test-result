@@ -15,21 +15,65 @@ export class DashboardComponent implements OnInit {
   @ViewChild('confirmRemoveModal')
   confirmRemoveModal: ConfirmModalComponent;
 
-  allBuilds: any = {}
+  allBuilds: any = [{}, {}, {}, {}, {}, {}]
 
   removingBuild: any
 
 
   constructor(private service: ResultsService,
             private router: Router) {
-    this.service.getAllResults('android').subscribe(results=>{
-      this.allBuilds.android = results;
+    this.service.getAllResults('android_dev').subscribe(results=>{
+      var buildInfo = {client: 'android_dev', 
+                      server: 'dev',
+                      results: results}
+
+
+      this.allBuilds[0] = buildInfo;
     });
-    this.service.getAllResults('ios').subscribe(results=>{
-      this.allBuilds.ios = results;
+
+    this.service.getAllResults('android_staging').subscribe(results=>{
+      var buildInfo = {client: 'android_staging', 
+                      server: 'staging',
+                      results: results}
+
+
+      this.allBuilds[1] = buildInfo;
     });
-    this.service.getAllResults('web').subscribe(results=>{
-      this.allBuilds.web = results;
+
+    this.service.getAllResults('ios_dev').subscribe(results=>{
+      var buildInfo = {client: 'ios_dev', 
+                      server: 'dev',
+                      results: results}
+
+
+      this.allBuilds[2] = buildInfo;
+    });
+
+    this.service.getAllResults('ios_staging').subscribe(results=>{
+      var buildInfo = {client: 'ios_staging', 
+                      server: 'staging',
+                      results: results}
+
+
+      this.allBuilds[3] = buildInfo;
+    });
+
+    this.service.getAllResults('web_dev').subscribe(results=>{
+      var buildInfo = {client: 'web_dev', 
+                      server: 'dev',
+                      results: results}
+
+
+      this.allBuilds[4] = buildInfo;
+    });
+
+    this.service.getAllResults('web_staging').subscribe(results=>{
+      var buildInfo = {client: 'web_staging', 
+                      server: 'staging',
+                      results: results}
+
+
+      this.allBuilds[5] = buildInfo;
     });
   }
 

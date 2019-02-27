@@ -5,19 +5,27 @@
   text-align: center;
   display: inline-block;
   width: 100%;
-  margin: 15px 0;
+  margin: 5px 0;
 
   border: 1px solid $spond-blue;
 
   .client-title {
-    line-height: 30px;
+    line-height: 50px;
     background: $spond-blue;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-transform: uppercase;
   }
-
+  
   .client-title:hover {
     cursor: pointer;
     text-decoration: underline;
   }
+}
+
+.section-margin {
+  margin-bottom: 50px;
 }
 
 .border-top {
@@ -46,6 +54,11 @@
   line-height: 30px;
 }
 
+.client-section-title {
+  @extend .base-col;
+  width: 100%;
+}
+
 .build-number-col {
   @extend .base-col;
   width: 10%;
@@ -71,29 +84,30 @@
 
 .build-faild-case-number-col {
   @extend .base-col;
+  width: 40%;
 
-  color: $spond-red;
-  width: 10%;
+  .number {
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .failed-number {
+      color: $spond-red;
+  }
+
+  .ignored-number {
+      color: $spond-orange;
+  }
+
+  .fixed-number {
+      color: green;
+  }
+
+  .remain-number {
+      color: $spond-red;
+  }
 }
 
-.build-ignored-case-number-col {
-  @extend .base-col;
-  width: 10%;
-  color: $spond-orange;
-}
-
-.build-fixed-case-number-col {
-  @extend .base-col;
-  width: 10%;
-  color: green;
-}
-
-.build-remain-case-number-col {
-  @extend .base-col;
-  width: 10%;
-
-  color: $spond-red;
-}
 
 .action-col {
   @extend .base-col;

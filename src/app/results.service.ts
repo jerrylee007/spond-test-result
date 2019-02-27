@@ -69,21 +69,7 @@ export class ResultsService {
         path = `${CLIENT_API}screenshots/${client}/result/${screenshot}`
     }
     else {
-      switch (client) {
-        case "ios":
-          path = `${CLIENT_API}ios/${build.buildNumber}/archive/result/${screenshot}`;
-          break;
-        case "web":
-          path = `${CLIENT_API}web/${build.buildNumber}/archive/result/${screenshot}`;
-          break;
-
-        case "android":
-          path = `${CLIENT_API}android/${build.buildNumber}/archive/result/${screenshot}`;
-          break;
-    
-        default:
-          break;
-      }  
+      path = `${CLIENT_API}${client}/${build.buildNumber}/archive/result/${screenshot}`;
     }
     return path;
   }
@@ -95,21 +81,7 @@ export class ResultsService {
         path = `${CLIENT_API}screenshots/${client}/new/${screenshot}`
     }
     else {
-      switch (client) {
-        case "ios":
-          path = `${CLIENT_API}ios/${build.buildNumber}/archive/new/${screenshot}`;
-          break;
-        case "web":
-          path = `${CLIENT_API}web/${build.buildNumber}/archive/new/${screenshot}`;
-          break;
-
-        case "android":
-          path = `${CLIENT_API}android/${build.buildNumber}/archive/new/${screenshot}`;
-          break;
-    
-        default:
-          break;
-      }  
+      path = `${CLIENT_API}${client}/${build.buildNumber}/archive/new/${screenshot}`; 
     }
 
 
@@ -117,6 +89,7 @@ export class ResultsService {
   }
 
   getBaseScreenshotPath(client: string, screenshot:string , build: any) {
-    return `${CLIENT_API}screenshots/${client}/base/${screenshot}`;
+    let clientComponents = client.split('_')
+    return `${CLIENT_API}screenshots/${clientComponents[0]}/base/${clientComponents[1]}/${screenshot}`;
   }
 }

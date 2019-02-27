@@ -48,12 +48,13 @@ export class ImageSlideModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.baseImageInvalid = false
-    this.resultImageInvalid = false
-    this.newImageInvalid = false
   }
 
   show(client: string, build: any, imageToShow: any) {
+    this.baseImageInvalid = false
+    this.resultImageInvalid = false
+    this.newImageInvalid = false
+
     this.client = client;
     this.build = build;
     this.showingImage = imageToShow;
