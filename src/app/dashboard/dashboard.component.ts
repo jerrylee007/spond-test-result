@@ -101,6 +101,10 @@ export class DashboardComponent implements OnInit {
 
   }
 
+  getTestLinkResultPath(client, build) {
+    return this.service.getTestLinkResultPath(client, build);
+  }
+
   goToBuildFailedDetails(client, build) {
     this.router.navigate([`build/${client}/${build.buildNumber}`]);
   }

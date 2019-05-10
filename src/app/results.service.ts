@@ -88,8 +88,11 @@ export class ResultsService {
     return path;
   }
 
+  getTestLinkResultPath(client, build) {
+    return `${CLIENT_API}${client}/${build.buildNumber}/archive/TestlinkResult.xml`;
+  }
+
   getBaseScreenshotPath(client: string, screenshot:string , build: any) {
-    let clientComponents = client.split('_')
-    return `${CLIENT_API}screenshots/${clientComponents[0]}/base/${clientComponents[1]}/${screenshot}`;
+    return `${CLIENT_API}screenshots/${client}/base/${screenshot}`;
   }
 }
