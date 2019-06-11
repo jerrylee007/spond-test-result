@@ -47,6 +47,8 @@ export class BuildDetailComponent implements OnInit {
   noResultCase: string[] = [];
   noBaseCase: string[] = [];
 
+  categoryToShow: any = 3;
+
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
 
@@ -110,6 +112,8 @@ export class BuildDetailComponent implements OnInit {
         cases:categoryDict[category]
       });
     }
+
+    this.categoryToShow = 2;
   }
 
   getResultScreenshotPath(screenshot) {
@@ -147,6 +151,10 @@ export class BuildDetailComponent implements OnInit {
     else {
       this.noResultCase.push(caseName);
     }
+  }
+
+  onScrolled() {
+    this.categoryToShow += 2;
   }
 
   onBuildUpdated(results) {

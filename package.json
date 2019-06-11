@@ -24,6 +24,7 @@
     "bootstrap-sass": "^3.3.7",
     "core-js": "^2.5.4",
     "ng2-bootstrap": "^1.6.3",
+    "ngx-infinite-scroll": "^6.0.0",
     "node-sass": "^4.9.4",
     "rxjs": "~6.2.0",
     "rxjs-compat": "^6.3.3",

@@ -1,5 +1,4 @@
 <div  *ngIf="build"  class="build-detail-wrapper">
-
     <div ngbDropdown class="build-detail-filter-wrapper">
       <div class="btn btn-outline-primary build-detail-filter-title" 
             id="dropdownBasic1" 
@@ -20,72 +19,90 @@
       </div>
     </div>
 
-    <div class="build-detail-content-wrapper">
-      <div *ngFor="let category of caseCategories; let i = index">
-        <div class="build-detail-section-title">
-          {{category.name}}
+    <div class="build-detail-content-wrapper"
+          infiniteScroll
+         (scrolled)="onScrolled()">
+      <div *ngFor="let category of caseCategories; let categoryIndex = index">
+        <div *ngIf="categoryIndex < categoryToShow">
+            <div class="build-detail-section-title">
+              <div class="build-detail-section-title-text">{{category.name}}</div>
+              <spinner-button 
+              #btnBatchReplace
+              [id]="case"
+              class="build-detail-section-title-action"
+              spinnerTheme="spinner-white"
+              buttonTheme="btn-with-shadow spond-blue"
+              [isDisabled]="!category.isReplacing"
+              (click)="onBatchReplaceClicked(category, i)" 
+              aria-label="Close">
+                Pass all
+              </spinner-button>
+            </div>
+            <div 
+                *ngFor="let case of category.cases; let i = index"
+                class="build-detail-section-content"
+                 >
+        <!--          <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
+              <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
+
+              <div class="build-detail-item-title">
+                  {{case}}
+              </div>
+
+
+              <div class="build-detail-item" 
+                    *ngIf="isResultFailed(case)"
+                    (click)="showFailedCase(case)">
+                  Case not run
+              </div>
+
+              <div class="build-detail-item" 
+                    *ngIf="isBaseFailed(case)"
+                    (click)="showFailedCase(case)">
+                  New Case
+              </div>
+
+            <img class="build-detail-item" 
+                   [src]="getBaseScreenshotPath(case)" 
+                   (error)="loadImageFailed(case)" 
+                   alt=""
+                   *ngIf="isResultValid(case) && currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"
+                   (click)="showFailedCase(case)">
+
+              <img class="build-detail-item" 
+                   [src]="getResultScreenshotPath(case)" 
+                   (error)="loadImageFailed(case)" 
+                   alt=""
+                   *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isResultValid(case)"
+                   (click)="showFailedCase(case)">
+
+                <spinner-button 
+                class="build-detail-action"
+                [id]="case"
+                #btnReplace
+                buttonTheme="btn-with-shadow spond-blue"
+                spinnerTheme="spinner-white"
+                *ngIf="!isResultFailed(case) && currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
+                [isDisabled]="!isResultValid(case)"
+                (click)="onReplaceClicked(case, i)" aria-label="Close">
+                  Pass
+                </spinner-button>
+                <spinner-button 
+                #btnReplace
+                [id]="case"
+                class="build-detail-action"
+                *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isCaseFixed(case)"
+                spinnerTheme="spinner-white"
+                buttonTheme="btn-with-shadow spond-red"
+                [isDisabled]="!isResultValid(case)"
+                (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
+                  Undo pass
+                </spinner-button>
+            </div>  
         </div>
-        <div
-            *ngFor="let case of category.cases; let i = index"
-            class="build-detail-section-content"
-             >
-    <!--          <img *ngIf="isCaseFixed(case)" [src]="passedIcon" class="case-status-icon"/>
-          <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
-
-          <div class="build-detail-item-title">
-              {{case}}
-          </div>
 
 
-          <div class="build-detail-item" 
-                *ngIf="isResultFailed(case)"
-                (click)="showFailedCase(case)">
-              Case not run
-          </div>
-
-          <div class="build-detail-item" 
-                *ngIf="isBaseFailed(case)"
-                (click)="showFailedCase(case)">
-              New Case
-          </div>
-
-        <img class="build-detail-item" 
-               [src]="getBaseScreenshotPath(case)" 
-               (error)="loadImageFailed(case)" 
-               alt=""
-               *ngIf="isResultValid(case) && currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"
-               (click)="showFailedCase(case)">
-
-          <img class="build-detail-item" 
-               [src]="getResultScreenshotPath(case)" 
-               (error)="loadImageFailed(case)" 
-               alt=""
-               *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isResultValid(case)"
-               (click)="showFailedCase(case)">
-
-            <spinner-button 
-            class="build-detail-action"
-            [id]="case"
-            #btnReplace
-            buttonTheme="btn-with-shadow spond-blue"
-            spinnerTheme="spinner-white"
-            *ngIf="!isResultFailed(case) && currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
-            [isDisabled]="!isResultValid(case)"
-            (click)="onReplaceClicked(case, i)" aria-label="Close">
-              Pass
-            </spinner-button>
-            <spinner-button 
-            #btnReplace
-            [id]="case"
-            class="build-detail-action"
-            *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isCaseFixed(case)"
-            spinnerTheme="spinner-white"
-            buttonTheme="btn-with-shadow spond-red"
-            [isDisabled]="!isResultValid(case)"
-            (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
-              Undo pass
-            </spinner-button>
-        </div>        
+      
       </div>
 
     </div>

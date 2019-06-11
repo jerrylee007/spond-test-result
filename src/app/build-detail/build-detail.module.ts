@@ -6,6 +6,7 @@ import { ImageSlideModalModule } from '../imageSlideModal';
 import { BuildDetailComponent } from './build-detail.component';
 import {SpinnerButtonModule} from '../../common/components/spinnerButton';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     CommonModule,
     ImageSlideModalModule,
     SpinnerButtonModule,
+    InfiniteScrollModule,
     NgbModule
   ],
   providers: [
