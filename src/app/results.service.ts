@@ -34,6 +34,13 @@ export class ResultsService {
     return this.http.get(`${CLIENT_API}${client}/base`);
   }
 
+  batchReplaceScreenshots(client: string, buildId: string, screenshots: string[]) {
+    let params = {
+      screenshots: screenshots
+    }
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/batchReplace`, params);
+  }
+
   replaceScreenshot(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot

@@ -19,11 +19,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 		display: inline-block;
 		padding: 0 10px;
 
+
 		.image-title {
 			padding: 10px 0;
 		}
 
 		img {
+			max-height: 500px;
 			width: 100%;
 		}
 	}

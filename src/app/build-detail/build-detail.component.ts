@@ -29,6 +29,8 @@ export class BuildDetailComponent implements OnInit {
   imageSlideModal: ImageSlideModalComponent
   @ViewChildren('btnReplace')
   passBtns: QueryList<SpinnerButtonComponent>
+  @ViewChildren('btnBatchReplace')
+  batchReplaceBtns: QueryList<SpinnerButtonComponent>
 
   buildId: string;
   client: string;
@@ -163,6 +165,17 @@ export class BuildDetailComponent implements OnInit {
       this.build = results;
     }, error=>{
       btnUndoReplace.isSpinning = false;
+    });
+  }
+
+  onBatchReplaceClicked(category, index) {
+    let btnBatchReplace = this.batchReplaceBtns.find((btn, i)=>i == index);
+    btnBatchReplace.isSpinning = true;
+    this.service.batchReplaceScreenshots(this.client, this.build.buildNumber, category.cases).subscribe(results=>{
+      btnBatchReplace.isSpinning = false;
+      this.build = results;
+    }, error=>{
+      btnBatchReplace.isSpinning = false;
     });
   }
 

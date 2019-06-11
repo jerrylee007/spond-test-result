@@ -39,6 +39,22 @@
 			margin: 30px 0 10px 0;
 			font-weight: bold;
 			border-top: 1px solid $spond-blue;
+
+			.build-detail-section-title-text {
+				display: inline-block;
+			}
+
+			.build-detail-section-title-action {
+				font-size: 18px;
+				float: right;
+				margin-top: -5px;
+			}
+		}
+
+		.build-detail-section-action {
+			font-size: 18px;
+			float: right;
+			margin-top: -5px;
 		}
 
 		.build-detail-section-content {
