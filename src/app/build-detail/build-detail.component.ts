@@ -31,9 +31,14 @@ export class BuildDetailComponent implements OnInit {
   passBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnBatchReplace')
   batchReplaceBtns: QueryList<SpinnerButtonComponent>
+  @ViewChild('searchKeyControl')
+  searchKeyControl: any;
 
   buildId: string;
   client: string;
+
+  searchKey: string = ""
+  oldSearchKey: string = ""
 
   public BUILD_DETAIL_FILTER_TYPE = BUILD_DETAIL_FILTER_TYPE;
 
@@ -73,7 +78,12 @@ export class BuildDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    setInterval(() => {
+        if (this.oldSearchKey !== this.searchKey) {
+          this.onFilterSelected(this.currentFilter)
+          this.oldSearchKey = this.searchKey
+        }
+    }, 1000);
   }
 
   onFilterSelected(filter) {
@@ -96,14 +106,29 @@ export class BuildDetailComponent implements OnInit {
     this.caseCategories = [];
 
     for (let caseName of this.casesToShow) {
-      var category = caseName.split("_")[0];
-      category = category.split(".")[0];
 
-      if (!categoryDict[category]) {
-        categoryDict[category] = [];
+      if (this.searchKey.length == 0 || caseName.includes(this.searchKey)) {
+
+        var caseIds = caseName.split("_");
+        var category = '';
+        for (let caseId of caseIds) {
+          if (caseId.startsWith('SPND')) {
+            if (category.length > 0) {
+              category += '_';
+            }
+            category += caseId;
+          }
+          else {
+            break;
+          }
+        }
+
+        if (!categoryDict[category]) {
+          categoryDict[category] = [];
+        }
+
+        categoryDict[category].push(caseName)
       }
-
-      categoryDict[category].push(caseName)
     }
 
     for (let category in categoryDict) {

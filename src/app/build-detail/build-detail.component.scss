@@ -3,11 +3,23 @@
 .build-detail-wrapper {
 	background-color: $spond-background;
 
+	.search-wrapper {
+		text-align: center;
+		display: inline-block;
+		margin: 15px;
+		width: 30%;
+		
+		input {
+			height: 50px;
+		}
+	}
+
 	.build-detail-filter-wrapper {
 		text-align: center;
-		width: 100%;
 		background: white;
-		
+		display: inline-block;
+		float: right;
+		padding: 5px 15px;
 
 		.build-detail-filter-title {
 			font-size: 18px;

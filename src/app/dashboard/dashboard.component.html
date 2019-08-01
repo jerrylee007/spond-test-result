@@ -67,6 +67,26 @@
     </div>
 </div>
 
+<div class="search-wrapper">
+    <input class="form-control" 
+  #searchKeyControl="ngModel" 
+  name="searchKeyControl"
+    [(ngModel)]="searchKey" placeholder="please input the case id (for example:2312) to remove" autofocus #todoText>
+
+  <spinner-button 
+  #btnRemoveBase
+  class="remove-base-action"
+  spinnerTheme="spinner-white"
+  buttonTheme="btn-with-shadow spond-small-red"
+  [isDisabled]="!isRemovingBase"
+  (click)="onRemoveBase();$event.stopPropagation();" aria-label="Close">
+    Remove
+  </spinner-button>
+</div>
+
 <confirm-modal #confirmRemoveModal
 (onConfirm)="onConfirmRemoveClicked($event)"></confirm-modal>
+<confirm-modal #confirmRemoveBaseModal
+(onConfirm)="onConfirmRemoveBaseClicked($event)"></confirm-modal>
+<confirm-modal #removeBaseResultModal></confirm-modal>
 

@@ -1,4 +1,10 @@
-<div  *ngIf="build"  class="build-detail-wrapper">
+<div  *ngIf="build" class="build-detail-wrapper">
+  <div class="search-wrapper">
+      <input class="form-control" 
+    #searchKeyControl="ngModel" 
+    name="searchKeyControl"
+      [(ngModel)]="searchKey" placeholder="please input the key name or screenshot name to search" autofocus #todoText>
+  </div>
     <div ngbDropdown class="build-detail-filter-wrapper">
       <div class="btn btn-outline-primary build-detail-filter-title" 
             id="dropdownBasic1" 
@@ -33,7 +39,7 @@
               spinnerTheme="spinner-white"
               buttonTheme="btn-with-shadow spond-blue"
               [isDisabled]="!category.isReplacing"
-              (click)="onBatchReplaceClicked(category, i)" 
+              (click)="onBatchReplaceClicked(category, categoryIndex)" 
               aria-label="Close">
                 Pass all
               </spinner-button>

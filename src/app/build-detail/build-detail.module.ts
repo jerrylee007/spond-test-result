@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {ModalModule} from 'ng2-bootstrap/modal';
 import {CommonModule} from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ImageSlideModalModule } from '../imageSlideModal';
 import { BuildDetailComponent } from './build-detail.component';
@@ -15,6 +16,8 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
   imports: [
     ModalModule,
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     ImageSlideModalModule,
     SpinnerButtonModule,
     InfiniteScrollModule,

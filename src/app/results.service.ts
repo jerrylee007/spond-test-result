@@ -10,7 +10,7 @@ export const CLIENT_API = 'http://118.24.41.169:8000/'
 const LOCAL_BUILD_ID = '99999'
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Cache-Control': 'only-if-cached'})
 };
 
 @Injectable({ providedIn: 'root' })
@@ -50,6 +50,13 @@ export class ResultsService {
 
   removeBuild(client: string, buildId: string) {
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/remove`, {});
+  }
+
+  batchRemoveBaseScreenshots(caseId: string) {
+    let params = {
+      caseId: caseId
+    }
+    return this.http.post(`${CLIENT_API}batchRemoveBase`, params);
   }
 
   removeBaseScreenshot(client: string, buildId: string, screenshot: string) {

@@ -1,5 +1,23 @@
 @import '../../common/styles/index';
 
+.search-wrapper {
+  text-align: center;
+  margin: 15px;
+  width: 100%;
+  
+  input {
+    height: 50px;
+    display: inline-block;
+    width: 500px;
+  }
+
+  .remove-base-action {
+    display: inline-block;
+    padding: 20px;
+  }
+}
+
+
 .dashboard-wrapper {
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   text-align: center;
