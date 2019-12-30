@@ -11,9 +11,13 @@ declare var require: any;
 
 export enum BUILD_DETAIL_FILTER_TYPE {
   FAILED = <any>"Failed screenshots",
+  FAILED_AFTER_FIXED = <any>"Failed after fixed screenshots",
   BASE = <any>"Base screenshots",
   FIXED = <any>"Fixed screenshots",
-  IGNORED = <any>"Ignored screenshots"
+  IGNORED = <any>"Ignored screenshots",
+  SIMILAR_FAILED1 = <any>"Similar failed 1",
+  SIMILAR_FAILED2 = <any>"Similar failed 2",
+  SIMILAR_FAILED3 = <any>"Similar failed 3"
 }
 
 @Component({
@@ -31,8 +35,13 @@ export class BuildDetailComponent implements OnInit {
   passBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnBatchReplace')
   batchReplaceBtns: QueryList<SpinnerButtonComponent>
+  @ViewChildren('btnReplaceSimilar')
+  replaceSimilarBtns: QueryList<SpinnerButtonComponent>
   @ViewChild('searchKeyControl')
   searchKeyControl: any;
+
+  @ViewChild('passSimilarFailedButton')
+  passSimilarFailedButton: SpinnerButtonComponent;
 
   buildId: string;
   client: string;
@@ -92,11 +101,23 @@ export class BuildDetailComponent implements OnInit {
     if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED) {
        this.casesToShow = this.build.failedData;
     }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
+       this.casesToShow = this.build.failedData.filter( ( el ) => !this.build.replaced.includes( el ) )
+    }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FIXED) {
        this.casesToShow = this.build.replaced;
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.IGNORED) {
        this.casesToShow = this.build.ignoredData;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1) {
+       this.casesToShow = this.build.similarData1;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2) {
+       this.casesToShow = this.build.similarData2;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3) {
+       this.casesToShow = this.build.similarData3;
     }
     else {
        this.casesToShow = this.baseScreenshots;
@@ -190,6 +211,18 @@ export class BuildDetailComponent implements OnInit {
     this.imageSlideModal.show(this.client, this.build, caseName);
   }
 
+  onRemoveSimilarClicked(screenshot, index) {
+    let btnReplace = this.replaceSimilarBtns.find((btn, i)=>i == index);
+    btnReplace.isSpinning = true;
+    this.service.removeSimilarScreenshot(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
+      btnReplace.isSpinning = false;
+      this.build = results;
+      this.onFilterSelected(this.currentFilter);
+    }, error=>{
+      btnReplace.isSpinning = false;
+    });
+  }
+
   onUndoReplacementClicked(screenshot, index) {
     let btnUndoReplace = this.passBtns.find((btn, i)=>i == index);
     btnUndoReplace.isSpinning = true;
@@ -209,6 +242,17 @@ export class BuildDetailComponent implements OnInit {
       this.build = results;
     }, error=>{
       btnBatchReplace.isSpinning = false;
+    });
+  }
+
+  onBatchPassSimilarFailedClicked() {
+    this.passSimilarFailedButton.isSpinning = true;
+    this.service.batchPassSimilarScreenshots(this.client, this.build.buildNumber, this.build.similarData1.slice(0, 500)).subscribe(results=>{
+      this.passSimilarFailedButton.isSpinning = false;
+      this.build = results;
+      this.onFilterSelected(this.currentFilter);
+    }, error=>{
+      this.passSimilarFailedButton.isSpinning = false;
     });
   }
 

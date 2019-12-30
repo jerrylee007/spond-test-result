@@ -41,6 +41,14 @@ export class ResultsService {
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/batchReplace`, params);
   }
 
+
+  batchPassSimilarScreenshots(client: string, buildId: string, screenshots: string[]) {
+    let params = {
+      screenshots: screenshots
+    }
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/batchPassSimilar`, params);
+  }
+
   replaceScreenshot(client: string, buildId: string, screenshot: string) {
     let params = {
       screenshot: screenshot
@@ -57,6 +65,13 @@ export class ResultsService {
       caseId: caseId
     }
     return this.http.post(`${CLIENT_API}batchRemoveBase`, params);
+  }
+
+  removeSimilarScreenshot(client: string, buildId: string, screenshot: string) {
+    let params = {
+      screenshot: screenshot
+    }
+    return this.http.post(`${CLIENT_API}build/${client}/${buildId}/removeSimilar`, params);
   }
 
   removeBaseScreenshot(client: string, buildId: string, screenshot: string) {

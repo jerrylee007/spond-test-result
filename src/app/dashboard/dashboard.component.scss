@@ -31,7 +31,7 @@
     line-height: 50px;
     background: $spond-blue;
     color: white;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
   }
@@ -79,10 +79,15 @@
 
 .build-number-col {
   @extend .base-col;
-  width: 8%;
+  width: 6%;
 }
 
 .build-version-col {
+  @extend .base-col;
+  width: 8%;
+}
+
+.build-commit-id-col {
   @extend .base-col;
   width: 10%;
 }
@@ -90,7 +95,7 @@
 .build-time-col {
   @extend .base-col;
 
-  width: 15%;
+  width: 12%;
 }
 
 .number {
@@ -100,10 +105,6 @@
 
 .failed-number {
     color: $spond-red;
-}
-
-.ignored-number {
-    color: $spond-orange;
 }
 
 .fixed-number {
@@ -121,12 +122,12 @@
 .build-case-number-col {
   @extend .base-col;
 
-  width: 18%;
+  width: 17%;
 }
 
 .build-faild-screenshots-number-col {
   @extend .base-col;
-  width: 32%;
+  width: 30%;
 }
 
 

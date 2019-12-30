@@ -10,6 +10,9 @@
    <div class="build-version-col border-top app-background">
     Version
   </div>
+   <div class="build-commit-id-col border-top app-background">
+    Last commit
+  </div>
    <div class="build-time-col border-top app-background">
     Time
   </div>
@@ -21,7 +24,6 @@
    <div class="build-faild-screenshots-number-col border-top app-background">
     Screenshots (
     <span class="failed-number">Failed</span> /
-    <span class="ignored-number">Ignored</span> /
     <span class="fixed-number">Fixed</span> /
     <span class="remain-number">Remained</span> /
     <span >Total</span> )
@@ -36,6 +38,10 @@
        <div class="build-version-col" style="font-size: 11px;">
         {{build.version | slice: -15}}
       </div>
+       <div class="build-commit-id-col" style="font-size: 11px;  color: blue; text-decoration: underline;" 
+       (click)="onClickedCommitId(build);$event.stopPropagation();">
+        {{build.commitId}}
+      </div>
        <div class="build-time-col">
         {{build.time}}
       </div>
@@ -44,10 +50,9 @@
         <span class="fixed-number number">{{build.passedCount}}</span>
       </div>
        <div class="build-faild-screenshots-number-col">
-        <span class="failed-number number">{{build.failedData ? build.failedData.length : 0}}</span> /
-        <span class="ignored-number number">{{build.ignoredData ? build.ignoredData.length : 0}}</span> /
-        <span class="fixed-number number">{{build.replaced ? build.replaced.length : 0}}</span> /
-        <span class="remain-number number">{{(build.failedData ? build.failedData.length : 0) - (build.replaced ? build.replaced.length : 0)}}</span>  /
+        <span class="failed-number number">{{build.failedScreenshotsCount}}</span> /
+        <span class="fixed-number number">{{build.replacedScreenshotsCount}}</span> /
+        <span class="remain-number number">{{(build.failedScreenshotsCount) - (build.replacedScreenshotsCount)}}</span>  /
         <span class="total-number number">{{build.baseFileCount}}</span>
       </div>
        <div class="action-col">

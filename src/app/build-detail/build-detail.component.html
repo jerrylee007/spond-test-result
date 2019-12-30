@@ -1,3 +1,15 @@
+<div class="pass-similar-bar-wrapper" *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1">
+                  <spinner-button 
+                  #passSimilarFailedButton
+                  [id]="case"
+                  class="build-detail-action"
+                  spinnerTheme="spinner-white"
+                  buttonTheme="btn-with-shadow spond-blue"
+                  (click)="onBatchPassSimilarFailedClicked(case, i)" aria-label="Close">
+                    Pass all similar failed
+                  </spinner-button>    
+</div>
+
 <div  *ngIf="build" class="build-detail-wrapper">
   <div class="search-wrapper">
       <input class="form-control" 
@@ -11,17 +23,21 @@
             ngbDropdownToggle>
         <span>{{currentFilter}}</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED"> ({{build.failedData ? build.failedData.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED"> ({{build.failedData ? (build.failedData.length - (build.replaced ? build.replaced.length : 0)) : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FIXED"> ({{build.replaced ? build.replaced.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.IGNORED"> ({{build.ignoredData ? build.ignoredData.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"> ({{baseScreenshots.length}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1"> ({{ build.similarData1 ? build.similarData1.length : 0}})</span>
         
       </div>
       <span class="caret float-right"></span>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedData ? build.failedData.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED}} ({{build.failedData ? (build.failedData.length - (build.replaced ? build.replaced.length : 0)) : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.IGNORED)">{{BUILD_DETAIL_FILTER_TYPE.IGNORED}} ({{build.ignoredData ? build.ignoredData.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FIXED}} ({{build.replaced ? build.replaced.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.BASE)">{{BUILD_DETAIL_FILTER_TYPE.BASE}} ({{baseScreenshots.length}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1)">{{BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1}} ({{build.similarData1 ? build.similarData1.length : 0}})</div>
       </div>
     </div>
 
@@ -82,35 +98,51 @@
                    *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isResultValid(case)"
                    (click)="showFailedCase(case)">
 
-                <spinner-button 
-                class="build-detail-action"
-                [id]="case"
-                #btnReplace
-                buttonTheme="btn-with-shadow spond-blue"
-                spinnerTheme="spinner-white"
-                *ngIf="!isResultFailed(case) && currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
-                [isDisabled]="!isResultValid(case)"
-                (click)="onReplaceClicked(case, i)" aria-label="Close">
-                  Pass
-                </spinner-button>
-                <spinner-button 
-                #btnReplace
-                [id]="case"
-                class="build-detail-action"
-                *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isCaseFixed(case)"
-                spinnerTheme="spinner-white"
-                buttonTheme="btn-with-shadow spond-red"
-                [isDisabled]="!isResultValid(case)"
-                (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
-                  Undo pass
-                </spinner-button>
+               <div *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1
+               || currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2
+               || currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3">
+                  <spinner-button 
+                  class="build-detail-action"
+                  [id]="case"
+                  #btnReplaceSimilar
+                  buttonTheme="btn-with-shadow spond-blue"
+                  spinnerTheme="spinner-white"
+                  (click)="onRemoveSimilarClicked(case, i)" aria-label="Close">
+                    Remove from similar failed
+                  </spinner-button>
+               </div>
+
+               <div *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1
+               && currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2
+               && currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3">
+                  <spinner-button 
+                  class="build-detail-action"
+                  [id]="case"
+                  #btnReplace
+                  buttonTheme="btn-with-shadow spond-blue"
+                  spinnerTheme="spinner-white"
+                  *ngIf="!isResultFailed(case) && currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && !isCaseFixed(case)"
+                  [isDisabled]="!isResultValid(case)"
+                  (click)="onReplaceClicked(case, i)" aria-label="Close">
+                    Pass
+                  </spinner-button>
+                  <spinner-button 
+                  #btnReplace
+                  [id]="case"
+                  class="build-detail-action"
+                  *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isCaseFixed(case)"
+                  spinnerTheme="spinner-white"
+                  buttonTheme="btn-with-shadow spond-red"
+                  [isDisabled]="!isResultValid(case)"
+                  (click)="onUndoReplacementClicked(case, i)" aria-label="Close">
+                    Undo pass
+                  </spinner-button>                 
+               </div>
+
+
             </div>  
         </div>
-
-
-      
       </div>
-
     </div>
 
 </div>
