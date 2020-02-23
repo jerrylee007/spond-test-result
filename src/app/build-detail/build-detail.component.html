@@ -1,4 +1,4 @@
-<div class="pass-similar-bar-wrapper" *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1">
+<div class="pass-similar-bar-wrapper" *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED">
                   <spinner-button 
                   #passSimilarFailedButton
                   [id]="case"
@@ -22,22 +22,23 @@
             id="dropdownBasic1" 
             ngbDropdownToggle>
         <span>{{currentFilter}}</span>
-        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED"> ({{build.failedData ? build.failedData.length : 0}})</span>
-        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED"> ({{build.failedData ? (build.failedData.length - (build.replaced ? build.replaced.length : 0)) : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED"> ({{build.failedScreenshots ? build.failedScreenshots.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED"> ({{build.failedScreenshots ? (build.failedScreenshots.length - (build.replaced ? build.replaced.length : 0)) : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FIXED"> ({{build.replaced ? build.replaced.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.IGNORED"> ({{build.ignoredData ? build.ignoredData.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.BASE"> ({{baseScreenshots.length}})</span>
-        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1"> ({{ build.similarData1 ? build.similarData1.length : 0}})</span>
-        
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.NEW"> ({{noBaseCase.length}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED"> ({{ build.similarData ? build.similarData.length : 0}})</span>
       </div>
       <span class="caret float-right"></span>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedData ? build.failedData.length : 0}})</div>
-        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED}} ({{build.failedData ? (build.failedData.length - (build.replaced ? build.replaced.length : 0)) : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedScreenshots ? build.failedScreenshots.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED}} ({{build.failedScreenshots ? (build.failedScreenshots.length - (build.replaced ? build.replaced.length : 0)) : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.IGNORED)">{{BUILD_DETAIL_FILTER_TYPE.IGNORED}} ({{build.ignoredData ? build.ignoredData.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FIXED}} ({{build.replaced ? build.replaced.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.NEW)">{{BUILD_DETAIL_FILTER_TYPE.NEW}} ({{noBaseCase.length}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.BASE)">{{BUILD_DETAIL_FILTER_TYPE.BASE}} ({{baseScreenshots.length}})</div>
-        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1)">{{BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1}} ({{build.similarData1 ? build.similarData1.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED)">{{BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED}} ({{build.similarData ? build.similarData.length : 0}})</div>
       </div>
     </div>
 
@@ -50,6 +51,7 @@
               <div class="build-detail-section-title-text">{{category.name}}</div>
               <spinner-button 
               #btnBatchReplace
+              *ngIf="currentFilter !== BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED"
               [id]="case"
               class="build-detail-section-title-action"
               spinnerTheme="spinner-white"
@@ -98,23 +100,19 @@
                    *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.BASE && isResultValid(case)"
                    (click)="showFailedCase(case)">
 
-               <div *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1
-               || currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2
-               || currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3">
+               <div *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED">
                   <spinner-button 
                   class="build-detail-action"
                   [id]="case"
                   #btnReplaceSimilar
-                  buttonTheme="btn-with-shadow spond-blue"
+                  buttonTheme="btn-with-shadow spond-red"
                   spinnerTheme="spinner-white"
                   (click)="onRemoveSimilarClicked(case, i)" aria-label="Close">
                     Remove from similar failed
                   </spinner-button>
                </div>
 
-               <div *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1
-               && currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2
-               && currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3">
+               <div *ngIf="currentFilter!=BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED">
                   <spinner-button 
                   class="build-detail-action"
                   [id]="case"
@@ -148,4 +146,5 @@
 </div>
 
 <image-slide-modal #imageSlideModal
-(onBuildUpdated)="onBuildUpdated($event)"></image-slide-modal>
+(onBuildUpdated)="onBuildUpdated($event)"
+(onViewSimilarFailed)="onViewSimilarFailed($event)"></image-slide-modal>

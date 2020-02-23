@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, Input,
   Output, EventEmitter} from '@angular/core';
 import {ModalDirective} from 'ng2-bootstrap/modal';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {DeferredClickEvent} from './deferredClickEvent';
 
@@ -19,7 +19,7 @@ export class ConfirmModalComponent implements OnInit {
   isSubmitting: boolean;
   @Output() onCancel: EventEmitter<any> = new EventEmitter();
   @Output() onConfirm: EventEmitter<DeferredClickEvent> = new EventEmitter();
-  @ViewChild('modal') modal: ModalDirective;
+  @ViewChild('modal', { static: true }) modal: ModalDirective;
 
   constructor() {
   }

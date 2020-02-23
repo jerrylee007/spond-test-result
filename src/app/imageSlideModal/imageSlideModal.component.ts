@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter, HostListener} from '@angular/core';
 import {ModalDirective} from 'ng2-bootstrap/modal';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from 'rxjs';
 
 import {CLIENT_API} from '../results.service';
 import { ResultsService } from '../results.service';
@@ -13,12 +13,12 @@ import {SpinnerButtonComponent} from '../../common/components/spinnerButton';
   styleUrls: ['./imageSlideModal.component.scss'],
 })
 export class ImageSlideModalComponent implements OnInit {
-  @ViewChild('modal') modal: ModalDirective;
-  @ViewChild('btnReplace')
+  @ViewChild('modal', { static: true }) modal: ModalDirective;
+  @ViewChild('btnReplace', { static: false })
   btnReplace: SpinnerButtonComponent
-  @ViewChild('btnUndoReplace')
+  @ViewChild('btnUndoReplace', { static: false })
   btnUndoReplace: SpinnerButtonComponent
-  @ViewChild('btnRemove')
+  @ViewChild('btnRemove', { static: false })
   btnRemove: SpinnerButtonComponent
 
   showingImage: any
@@ -26,12 +26,14 @@ export class ImageSlideModalComponent implements OnInit {
   currentIndex: number
   build: any
   client: string
+  similarCount: any
 
   baseImageInvalid: Boolean;
   resultImageInvalid: Boolean;
   newImageInvalid: Boolean;
 
   @Output() onBuildUpdated: EventEmitter<any> = new EventEmitter();
+  @Output() onViewSimilarFailed: EventEmitter<any> = new EventEmitter();
 
   @HostListener('document:keydown', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
@@ -58,13 +60,19 @@ export class ImageSlideModalComponent implements OnInit {
     this.client = client;
     this.build = build;
     this.showingImage = imageToShow;
-    this.imageCandidates = build.failedData ? build.failedData : [];
+    if (build.failedData && build.failedData.constructor !== Array) {
+      this.imageCandidates = build.failedData ? Object.keys(build.failedData) : [];
+      this.similarCount = (this.imageCandidates.filter(image=> (Math.abs(build.failedData[image] - build.failedData[imageToShow]) <= 30)
+                                                                && build.failedData[image] > 0)).length
+    }
+    else {
+      this.imageCandidates = build.failedData ? build.failedData : [];
+    }
 
     this.currentIndex = this.imageCandidates.findIndex(image => image.fileName == imageToShow.fileName);
 
     this.modal.show()
   }
-
 
   loadBaseImageFailed() {
     this.baseImageInvalid = true
@@ -88,6 +96,11 @@ export class ImageSlideModalComponent implements OnInit {
 
   openNewImage() {
     window.open(this.getNewScreenshotPath());
+  }
+
+  viewSimilar(screenshot) {
+    this.onViewSimilarFailed.emit(screenshot)
+    this.modal.hide()
   }
 
   hasScreenshotBeenReplaced() {

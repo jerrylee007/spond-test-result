@@ -14,10 +14,9 @@ export enum BUILD_DETAIL_FILTER_TYPE {
   FAILED_AFTER_FIXED = <any>"Failed after fixed screenshots",
   BASE = <any>"Base screenshots",
   FIXED = <any>"Fixed screenshots",
+  NEW = <any>"New screenshots",
   IGNORED = <any>"Ignored screenshots",
-  SIMILAR_FAILED1 = <any>"Similar failed 1",
-  SIMILAR_FAILED2 = <any>"Similar failed 2",
-  SIMILAR_FAILED3 = <any>"Similar failed 3"
+  SIMILAR_FAILED = <any>"Similar failed",
 }
 
 @Component({
@@ -29,7 +28,7 @@ export class BuildDetailComponent implements OnInit {
   @Input()
   build: any
 
-  @ViewChild('imageSlideModal')
+  @ViewChild('imageSlideModal', { static: true })
   imageSlideModal: ImageSlideModalComponent
   @ViewChildren('btnReplace')
   passBtns: QueryList<SpinnerButtonComponent>
@@ -37,23 +36,25 @@ export class BuildDetailComponent implements OnInit {
   batchReplaceBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnReplaceSimilar')
   replaceSimilarBtns: QueryList<SpinnerButtonComponent>
-  @ViewChild('searchKeyControl')
+  @ViewChild('searchKeyControl', { static: false })
   searchKeyControl: any;
 
-  @ViewChild('passSimilarFailedButton')
+  @ViewChild('passSimilarFailedButton', { static: false })
   passSimilarFailedButton: SpinnerButtonComponent;
 
   buildId: string;
   client: string;
+  diff: string;
 
   searchKey: string = ""
   oldSearchKey: string = ""
+
+
 
   public BUILD_DETAIL_FILTER_TYPE = BUILD_DETAIL_FILTER_TYPE;
 
   casesToShow: string[] = [];
   caseCategories: any[] = [];
-
 
   baseScreenshots: any = [];
   currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
@@ -61,7 +62,7 @@ export class BuildDetailComponent implements OnInit {
   noResultCase: string[] = [];
   noBaseCase: string[] = [];
 
-  categoryToShow: any = 3;
+  categoryToShow: any = 4;
 
   passedIcon: any = require('./assets/icon_passed.png');
   failedIcon: any = require('./assets/icon_failed.png');
@@ -71,19 +72,23 @@ export class BuildDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private service: ResultsService,
   ) {
+    var self = this
 
     var pathElements = window.location.pathname.split("/");
     this.buildId = pathElements.pop();
     this.client = pathElements.pop();
 
-    this.service.getResultById(this.client, this.buildId).subscribe(results=>{
-      this.build = results;
-      this.onFilterSelected(this.currentFilter);
-    });
+    route.queryParams.subscribe(params => {
+      this.diff = params['diff'] || ""
+    })
 
-    this.service.getBaseScreenshots(this.client).subscribe(results=>{
-      this.baseScreenshots = results;
-    });
+    this.service.getResultById(this.client, this.buildId).subscribe(results=>{
+      this.service.getBaseScreenshots(this.client).subscribe(bases=>{
+        this.baseScreenshots = bases
+        self.onInitBuilds(results)
+        self.onFilterSelected(self.currentFilter)
+      })
+    })
   }
 
   ngOnInit() {
@@ -95,14 +100,30 @@ export class BuildDetailComponent implements OnInit {
     }, 1000);
   }
 
+  onInitBuilds(results) {
+    this.build = results
+    if (this.build.failedData && this.build.failedData.constructor !== Array) {
+      this.build.failedScreenshots = Object.keys(this.build.failedData)
+      this.noBaseCase = this.build.failedScreenshots.filter( ( el ) => !this.baseScreenshots.includes( el ) )
+    }
+    else {
+      this.build.failedScreenshots = this.build.failedData
+    }
+
+    if (this.diff.length > 0) {
+     this.build.similarData = this.build.failedScreenshots.filter(image=> (Math.abs(this.build.failedData[image] - +this.diff) <= 30) && this.build.failedData[image] > 0)
+     this.onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED)
+    }
+  }
+
   onFilterSelected(filter) {
     this.currentFilter = filter;
 
     if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED) {
-       this.casesToShow = this.build.failedData;
+       this.casesToShow = this.build.failedScreenshots;
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
-       this.casesToShow = this.build.failedData.filter( ( el ) => !this.build.replaced.includes( el ) )
+       this.casesToShow = this.build.failedScreenshots.filter( ( el ) => !this.build.replaced.includes( el ) )
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FIXED) {
        this.casesToShow = this.build.replaced;
@@ -110,14 +131,11 @@ export class BuildDetailComponent implements OnInit {
     else if (filter == BUILD_DETAIL_FILTER_TYPE.IGNORED) {
        this.casesToShow = this.build.ignoredData;
     }
-    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED1) {
-       this.casesToShow = this.build.similarData1;
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.NEW) {
+       this.casesToShow = this.noBaseCase;
     }
-    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED2) {
-       this.casesToShow = this.build.similarData2;
-    }
-    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED3) {
-       this.casesToShow = this.build.similarData3;
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED) {
+       this.casesToShow = this.build.similarData || [];
     }
     else {
        this.casesToShow = this.baseScreenshots;
@@ -159,7 +177,7 @@ export class BuildDetailComponent implements OnInit {
       });
     }
 
-    this.categoryToShow = 2;
+    this.categoryToShow = 4;
   }
 
   getResultScreenshotPath(screenshot) {
@@ -207,20 +225,17 @@ export class BuildDetailComponent implements OnInit {
     this.build = results;
   }
 
+  onViewSimilarFailed(screenshot) {
+     window.open(window.location.origin + window.location.pathname + "?diff=" + this.build.failedData[screenshot], '_blank')
+  }
+
   showFailedCase(caseName : string) {
     this.imageSlideModal.show(this.client, this.build, caseName);
   }
 
   onRemoveSimilarClicked(screenshot, index) {
-    let btnReplace = this.replaceSimilarBtns.find((btn, i)=>i == index);
-    btnReplace.isSpinning = true;
-    this.service.removeSimilarScreenshot(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
-      btnReplace.isSpinning = false;
-      this.build = results;
-      this.onFilterSelected(this.currentFilter);
-    }, error=>{
-      btnReplace.isSpinning = false;
-    });
+    this.build.similarData = this.build.similarData.filter(image=> image !== screenshot)
+    this.onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED)
   }
 
   onUndoReplacementClicked(screenshot, index) {
@@ -228,7 +243,7 @@ export class BuildDetailComponent implements OnInit {
     btnUndoReplace.isSpinning = true;
     this.service.undoReplacement(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
       btnUndoReplace.isSpinning = false;
-      this.build = results;
+     this.onInitBuilds(results)
     }, error=>{
       btnUndoReplace.isSpinning = false;
     });
@@ -239,7 +254,7 @@ export class BuildDetailComponent implements OnInit {
     btnBatchReplace.isSpinning = true;
     this.service.batchReplaceScreenshots(this.client, this.build.buildNumber, category.cases).subscribe(results=>{
       btnBatchReplace.isSpinning = false;
-      this.build = results;
+      this.onInitBuilds(results)
     }, error=>{
       btnBatchReplace.isSpinning = false;
     });
@@ -247,9 +262,9 @@ export class BuildDetailComponent implements OnInit {
 
   onBatchPassSimilarFailedClicked() {
     this.passSimilarFailedButton.isSpinning = true;
-    this.service.batchPassSimilarScreenshots(this.client, this.build.buildNumber, this.build.similarData1.slice(0, 500)).subscribe(results=>{
+    this.service.batchPassSimilarScreenshots(this.client, this.build.buildNumber, this.build.similarData.slice(0, 500)).subscribe(results=>{
       this.passSimilarFailedButton.isSpinning = false;
-      this.build = results;
+      this.onInitBuilds(results)
       this.onFilterSelected(this.currentFilter);
     }, error=>{
       this.passSimilarFailedButton.isSpinning = false;
@@ -261,7 +276,7 @@ export class BuildDetailComponent implements OnInit {
     btnReplace.isSpinning = true;
     this.service.replaceScreenshot(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
       btnReplace.isSpinning = false;
-      this.build = results;
+      this.onInitBuilds(results)
     }, error=>{
       btnReplace.isSpinning = false;
     });

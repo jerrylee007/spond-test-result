@@ -51,6 +51,15 @@
 
         <spinner-button 
         #btnReplace
+        class="view-similar-btn"
+        buttonTheme="btn-with-shadow spond-big-blue"
+        spinnerTheme="spinner-white"
+        (click)="viewSimilar(showingImage)" aria-label="Close">
+          view similar failed ({{similarCount}})
+        </spinner-button>
+
+        <spinner-button 
+        #btnReplace
         buttonTheme="btn-with-shadow spond-big-blue"
         spinnerTheme="spinner-white"
         *ngIf="!resultImageInvalid && !hasScreenshotBeenReplaced(showingImage)"

@@ -12,15 +12,15 @@ import {ConfirmModalComponent, DeferredClickEvent} from '../../common/components
   styleUrls: [ './dashboard.component.scss' ]
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('confirmRemoveModal')
+  @ViewChild('confirmRemoveModal', { static: true })
   confirmRemoveModal: ConfirmModalComponent;
-  @ViewChild('confirmRemoveBaseModal')
+  @ViewChild('confirmRemoveBaseModal', { static: true })
   confirmRemoveBaseModal: ConfirmModalComponent;
 
-  @ViewChild('removeBaseResultModal')
+  @ViewChild('removeBaseResultModal', { static: true })
   removeBaseResultModal: ConfirmModalComponent;
 
-  @ViewChild('searchKeyControl')
+  @ViewChild('searchKeyControl', { static: true })
   searchKeyControl: any;
 
 
@@ -70,23 +70,23 @@ export class DashboardComponent implements OnInit {
       this.allBuilds[this.clientToIndex('ios_staging')] = buildInfo;
     });
 
-    // this.service.getAllResults('web_dev').subscribe(results=>{
-    //   var buildInfo = {client: 'web_dev', 
-    //                   server: 'dev',
-    //                   results: results}
+    this.service.getAllResults('web_dev').subscribe(results=>{
+      var buildInfo = {client: 'web_dev', 
+                      server: 'dev',
+                      results: results}
 
 
-    //   this.allBuilds[this.clientToIndex('web_dev')] = buildInfo;
-    // });
+      this.allBuilds[this.clientToIndex('web_dev')] = buildInfo;
+    });
 
-    // this.service.getAllResults('web_staging').subscribe(results=>{
-    //   var buildInfo = {client: 'web_staging', 
-    //                   server: 'staging',
-    //                   results: results}
+    this.service.getAllResults('web_staging').subscribe(results=>{
+      var buildInfo = {client: 'web_staging', 
+                      server: 'staging',
+                      results: results}
 
 
-    //   this.allBuilds[this.clientToIndex('web_staging')] = buildInfo;
-    // });
+      this.allBuilds[this.clientToIndex('web_staging')] = buildInfo;
+    });
   }
 
   ngOnInit() {
@@ -154,6 +154,15 @@ export class DashboardComponent implements OnInit {
        event.success();
     });
 
+  }
+
+  onClickedCommitId(build) {
+    if (build.client.includes('android')) {
+      window.open("https://github.com/spondcorp/spondroid/commit/" + build.commitId)
+    }
+    else {
+      window.open("https://github.com/spondcorp/spond-ios/commit/" + build.commitId)
+    }
   }
 
   onConfirmRemoveClicked(event: DeferredClickEvent) {
