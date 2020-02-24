@@ -16,7 +16,8 @@ import { SpondCommonModule }  from '../common/common.module';
 import {SpinnerButtonModule} from '../common/components/spinnerButton';
 import {ConfirmModalModule} from '../common/components/confirmModal';
 
-import { ModalModule } from 'ng2-bootstrap/modal';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import { ModalModule } from 'ng2-bootstrap/modal';
     ConfirmModalModule,
     ModalModule.forRoot(),
     RouterModule.forRoot(routes, { useHash: false }),
+    BrowserAnimationsModule,
   ],
   declarations: [
     AppComponent,

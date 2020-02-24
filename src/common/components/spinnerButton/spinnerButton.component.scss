@@ -1,3 +1,5 @@
+@import '../../styles/index';
+
 .spinner-button-component {
   border-radius: 2px;
   padding: 10px 16px;
@@ -14,24 +16,24 @@
   }
 
   &.spond-blue {
-    background-color: #4db7ca;
-    background: linear-gradient(to bottom,#4db7ca 50%,#28a5b5 100%) !important;
-    border: 1px solid #00b4cc;
+    background-color: $spond-blue;
+    // background: linear-gradient(to bottom,#4db7ca 50%,#28a5b5 100%) !important;
+    border: 1px solid $spond-blue;
     color: #ffffff;
     &:hover {
       background-color: #2aa6a8;
-      background: linear-gradient(to bottom,#00b4cc 50%,#2aa6a8 100%) !important;
+      //background: linear-gradient(to bottom,$spond-blue 50%,#2aa6a8 100%) !important;
     }
   }
 
   &.spond-red {
-    background-color: #d9534f;
-    background: linear-gradient(to bottom,#d9534f 50%,#c3534f 100%) !important;
-    border: 1px solid #d9534f;
+    background-color: $spond-red;
+   // background: linear-gradient(to bottom,#d9534f 50%,#c3534f 100%) !important;
+    border: 1px solid $spond-red;
     color: #ffffff;
     &:hover {
       background-color: #d9534f;
-      background: linear-gradient(to bottom,#d2504a 50%,#b04038 100%) !important;
+      //background: linear-gradient(to bottom,$spond-red 50%,#b04038 100%) !important;
     }
   }
 

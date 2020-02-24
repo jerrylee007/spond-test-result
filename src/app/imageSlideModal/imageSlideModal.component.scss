@@ -12,6 +12,10 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   }
 }
 
+.modal-footer {
+	display: inline-block;
+}
+
 .modal-body {
 	text-align: center;
 	.image-wrapper {
@@ -32,8 +36,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 }
 
 .view-similar-btn {
-	position: absolute;
-	right: 370px;
+	padding-right: 25%;
 
 }
 
@@ -67,5 +70,6 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
 .modal-dialog {
 	margin-top: 70px;
-	width: 70%;
+	width: 80%;
+	max-width: 1500px !important;
 }

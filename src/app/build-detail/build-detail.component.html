@@ -17,8 +17,8 @@
     name="searchKeyControl"
       [(ngModel)]="searchKey" placeholder="please input the key name or screenshot name to search" autofocus #todoText>
   </div>
-    <div ngbDropdown class="build-detail-filter-wrapper">
-      <div class="btn btn-outline-primary build-detail-filter-title" 
+    <div ngbDropdown class="build-detail-filter-wrapper" [autoClose]="true">
+      <div class="btn build-detail-filter-title" 
             id="dropdownBasic1" 
             ngbDropdownToggle>
         <span>{{currentFilter}}</span>
@@ -30,7 +30,6 @@
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.NEW"> ({{noBaseCase.length}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED"> ({{ build.similarData ? build.similarData.length : 0}})</span>
       </div>
-      <span class="caret float-right"></span>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedScreenshots ? build.failedScreenshots.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED}} ({{build.failedScreenshots ? (build.failedScreenshots.length - (build.replaced ? build.replaced.length : 0)) : 0}})</div>

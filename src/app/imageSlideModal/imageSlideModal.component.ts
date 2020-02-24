@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild, Input, Output, EventEmitter, HostListener} from '@angular/core';
-import {ModalDirective} from 'ng2-bootstrap/modal';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 import {Observable} from 'rxjs';
 
 import {CLIENT_API} from '../results.service';
@@ -14,11 +14,11 @@ import {SpinnerButtonComponent} from '../../common/components/spinnerButton';
 })
 export class ImageSlideModalComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal: ModalDirective;
-  @ViewChild('btnReplace', { static: false })
+  @ViewChild('btnReplace')
   btnReplace: SpinnerButtonComponent
-  @ViewChild('btnUndoReplace', { static: false })
+  @ViewChild('btnUndoReplace')
   btnUndoReplace: SpinnerButtonComponent
-  @ViewChild('btnRemove', { static: false })
+  @ViewChild('btnRemove')
   btnRemove: SpinnerButtonComponent
 
   showingImage: any

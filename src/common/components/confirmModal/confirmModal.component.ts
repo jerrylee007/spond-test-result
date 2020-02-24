@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, Input,
   Output, EventEmitter} from '@angular/core';
-import {ModalDirective} from 'ng2-bootstrap/modal';
+import {ModalDirective} from 'ngx-bootstrap/modal';
 import {Observable} from 'rxjs';
 
 import {DeferredClickEvent} from './deferredClickEvent';

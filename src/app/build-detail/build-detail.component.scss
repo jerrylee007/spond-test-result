@@ -29,6 +29,7 @@
 
 		.build-detail-filter-title {
 			font-size: 18px;
+			color: black;
 		}
 
 		.build-detail-filter-dropdown-item {
@@ -53,7 +54,7 @@
 		.build-detail-section-title {
 			font-size: 18px;
 			background-color: white;
-			padding: 10px;
+			padding: 20px;
 			margin: 30px 0 10px 0;
 			font-weight: bold;
 			border-top: 1px solid $spond-blue;
@@ -65,7 +66,7 @@
 			.build-detail-section-title-action {
 				font-size: 18px;
 				float: right;
-				margin-top: -5px;
+				margin-top: -12px;
 			}
 		}
 

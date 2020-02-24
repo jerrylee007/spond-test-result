@@ -36,10 +36,10 @@ export class BuildDetailComponent implements OnInit {
   batchReplaceBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnReplaceSimilar')
   replaceSimilarBtns: QueryList<SpinnerButtonComponent>
-  @ViewChild('searchKeyControl', { static: false })
+  @ViewChild('searchKeyControl')
   searchKeyControl: any;
 
-  @ViewChild('passSimilarFailedButton', { static: false })
+  @ViewChild('passSimilarFailedButton')
   passSimilarFailedButton: SpinnerButtonComponent;
 
   buildId: string;
@@ -123,7 +123,7 @@ export class BuildDetailComponent implements OnInit {
        this.casesToShow = this.build.failedScreenshots;
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
-       this.casesToShow = this.build.failedScreenshots.filter( ( el ) => !this.build.replaced.includes( el ) )
+       this.casesToShow = this.build.failedScreenshots.filter( ( el ) => !!!this.build.replaced || !this.build.replaced.includes( el ) )
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FIXED) {
        this.casesToShow = this.build.replaced;
