@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
 
   searchKey: string = ""
 
-  allBuilds: any = [{}, {}, {}, {}, {}, {}]
+  allBuilds: any = [{}, {}, {}, {}, {}, {}, {}, {}]
 
   removingBuild: any
   isRemovingBase: boolean
@@ -87,6 +87,15 @@ export class DashboardComponent implements OnInit {
 
       this.allBuilds[this.clientToIndex('web_staging')] = buildInfo;
     });
+
+    this.service.getAllResults('club_dev').subscribe(results=>{
+      var buildInfo = {client: 'club_dev', 
+                      server: 'dev',
+                      results: results}
+
+
+      this.allBuilds[this.clientToIndex('club_dev')] = buildInfo;
+    });
   }
 
   ngOnInit() {
@@ -111,6 +120,17 @@ export class DashboardComponent implements OnInit {
     else if (client === "web_staging") {
       return 5;
     }
+    else if (client === "club_dev") {
+      return 6;
+    }
+    else if (client === "club_staging") {
+      return 7;
+    }
+  }
+
+  
+  showAllBuilds(buildInfo: any) {
+    buildInfo.limit = 999
   }
 
   onRemoveBaseSucceed(result: any) {
@@ -160,8 +180,14 @@ export class DashboardComponent implements OnInit {
     if (build.client.includes('android')) {
       window.open("https://github.com/spondcorp/spondroid/commit/" + build.commitId)
     }
-    else {
+    else if ((build.client.includes('ios'))) {
       window.open("https://github.com/spondcorp/spond-ios/commit/" + build.commitId)
+    }
+    else if ((build.client.includes('club'))) {
+      window.open("https://github.com/spondcorp/spond-club-frontend/commit/" + build.commitId)
+    }
+    else {
+      window.open("https://github.com/spondcorp/spond-frontend/commit/" + build.commitId)
     }
   }
 

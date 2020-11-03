@@ -134,5 +134,8 @@
       }
     }
   },
-  "defaultProject": "spond-test-results"
+  "defaultProject": "spond-test-results",
+  "cli": {
+    "analytics": false
+  }
 }

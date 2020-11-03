@@ -10,12 +10,13 @@ declare var require: any;
 
 
 export enum BUILD_DETAIL_FILTER_TYPE {
-  FAILED = <any>"Failed screenshots",
-  FAILED_AFTER_FIXED = <any>"Failed after fixed screenshots",
-  BASE = <any>"Base screenshots",
-  FIXED = <any>"Fixed screenshots",
-  NEW = <any>"New screenshots",
-  IGNORED = <any>"Ignored screenshots",
+  FAILED = <any>"Failed",
+  FAILED_AFTER_FIXED = <any>"Failed after fixed",
+  BASE = <any>"Base",
+  FIXED = <any>"Fixed",
+  NEW = <any>"New",
+  IGNORED = <any>"Ignored",
+  CRASHED = <any>"Crashed",
   SIMILAR_FAILED = <any>"Similar failed",
 }
 
@@ -49,18 +50,18 @@ export class BuildDetailComponent implements OnInit {
   searchKey: string = ""
   oldSearchKey: string = ""
 
-
-
   public BUILD_DETAIL_FILTER_TYPE = BUILD_DETAIL_FILTER_TYPE;
 
   casesToShow: string[] = [];
   caseCategories: any[] = [];
 
   baseScreenshots: any = [];
+  crashedScreenshots: any = [];
   currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
 
   noResultCase: string[] = [];
   noBaseCase: string[] = [];
+  keyMap: any = {};
 
   categoryToShow: any = 4;
 
@@ -89,6 +90,12 @@ export class BuildDetailComponent implements OnInit {
         self.onFilterSelected(self.currentFilter)
       })
     })
+
+    if (this.client.includes('android')) {
+      this.service.getAndroidStringsKeyMap(this.client, this.buildId).subscribe(keyMap=>{
+        this.keyMap = keyMap
+      })
+    }
   }
 
   ngOnInit() {
@@ -105,13 +112,22 @@ export class BuildDetailComponent implements OnInit {
     if (this.build.failedData && this.build.failedData.constructor !== Array) {
       this.build.failedScreenshots = Object.keys(this.build.failedData)
       this.noBaseCase = this.build.failedScreenshots.filter( ( el ) => !this.baseScreenshots.includes( el ) )
+      if (this.build.crashData) {
+        this.crashedScreenshots = this.build.failedScreenshots.filter( ( el ) => 
+          this.build.crashData.filter(caseId=> el.includes(caseId)).length > 0
+          )
+      }
+      else {
+        this.crashedScreenshots = [];
+      }
+
     }
     else {
       this.build.failedScreenshots = this.build.failedData
     }
 
     if (this.diff.length > 0) {
-     this.build.similarData = this.build.failedScreenshots.filter(image=> (Math.abs(this.build.failedData[image] - +this.diff) <= 30) && this.build.failedData[image] > 0)
+     this.build.similarData = this.build.failedScreenshots.filter(image=> (Math.abs(this.build.failedData[image].diff - +this.diff) <= 30) && this.build.failedData[image].diff > 0)
      this.onFilterSelected(BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED)
     }
   }
@@ -121,6 +137,9 @@ export class BuildDetailComponent implements OnInit {
 
     if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED) {
        this.casesToShow = this.build.failedScreenshots;
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.CRASHED) {
+       this.casesToShow = this.crashedScreenshots;
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
        this.casesToShow = this.build.failedScreenshots.filter( ( el ) => !!!this.build.replaced || !this.build.replaced.includes( el ) )
@@ -146,7 +165,7 @@ export class BuildDetailComponent implements OnInit {
 
     for (let caseName of this.casesToShow) {
 
-      if (this.searchKey.length == 0 || caseName.includes(this.searchKey)) {
+      if (this.searchKey.length == 0 || caseName.includes(this.searchKey) || (this.keyMap[this.searchKey] && this.keyMap[this.searchKey].includes(caseName))) {
 
         var caseIds = caseName.split("_");
         var category = '';
@@ -159,6 +178,14 @@ export class BuildDetailComponent implements OnInit {
           }
           else {
             break;
+          }
+        }
+
+        //Add test account name to it if it is failed cases
+        if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED || filter == BUILD_DETAIL_FILTER_TYPE.CRASHED || filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
+          var failedCaseDetails = this.build.failedData[caseName];
+          if (failedCaseDetails && failedCaseDetails.mainAccount) {
+            category += (" ("+failedCaseDetails.mainAccount+")");
           }
         }
 
@@ -226,7 +253,7 @@ export class BuildDetailComponent implements OnInit {
   }
 
   onViewSimilarFailed(screenshot) {
-     window.open(window.location.origin + window.location.pathname + "?diff=" + this.build.failedData[screenshot], '_blank')
+     window.open(window.location.origin + window.location.pathname + "?diff=" + this.build.failedData[screenshot].diff, '_blank')
   }
 
   showFailedCase(caseName : string) {

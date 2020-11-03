@@ -23,6 +23,7 @@
             ngbDropdownToggle>
         <span>{{currentFilter}}</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED"> ({{build.failedScreenshots ? build.failedScreenshots.length : 0}})</span>
+        <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.CRASHED"> ({{build.crashData ? build.crashData.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED"> ({{build.failedScreenshots ? (build.failedScreenshots.length - (build.replaced ? build.replaced.length : 0)) : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.FIXED"> ({{build.replaced ? build.replaced.length : 0}})</span>
         <span *ngIf="currentFilter==BUILD_DETAIL_FILTER_TYPE.IGNORED"> ({{build.ignoredData ? build.ignoredData.length : 0}})</span>
@@ -32,6 +33,7 @@
       </div>
       <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED}} ({{build.failedScreenshots ? build.failedScreenshots.length : 0}})</div>
+        <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.CRASHED)">{{BUILD_DETAIL_FILTER_TYPE.CRASHED}} ({{build.crashData ? build.crashData.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED}} ({{build.failedScreenshots ? (build.failedScreenshots.length - (build.replaced ? build.replaced.length : 0)) : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.IGNORED)">{{BUILD_DETAIL_FILTER_TYPE.IGNORED}} ({{build.ignoredData ? build.ignoredData.length : 0}})</div>
         <div class="build-detail-filter-dropdown-item" (click)="onFilterSelected(BUILD_DETAIL_FILTER_TYPE.FIXED)">{{BUILD_DETAIL_FILTER_TYPE.FIXED}} ({{build.replaced ? build.replaced.length : 0}})</div>
@@ -47,7 +49,6 @@
       <div *ngFor="let category of caseCategories; let categoryIndex = index">
         <div *ngIf="categoryIndex < categoryToShow">
             <div class="build-detail-section-title">
-              <div class="build-detail-section-title-text">{{category.name}}</div>
               <spinner-button 
               #btnBatchReplace
               *ngIf="currentFilter !== BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED"
@@ -60,6 +61,7 @@
               aria-label="Close">
                 Pass all
               </spinner-button>
+              <div class="build-detail-section-title-text">{{category.name}}</div>
             </div>
             <div 
                 *ngFor="let case of category.cases; let i = index"

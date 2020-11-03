@@ -58,6 +58,7 @@
 			margin: 30px 0 10px 0;
 			font-weight: bold;
 			border-top: 1px solid $spond-blue;
+			text-align: center;
 
 			.build-detail-section-title-text {
 				display: inline-block;
@@ -65,7 +66,7 @@
 
 			.build-detail-section-title-action {
 				font-size: 18px;
-				float: right;
+				float: left;
 				margin-top: -12px;
 			}
 		}

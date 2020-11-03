@@ -34,6 +34,10 @@ export class ResultsService {
     return this.http.get(`${CLIENT_API}${client}/base`);
   }
 
+  getAndroidStringsKeyMap(client: string, buildId: string) {
+    return this.http.get<any>(`${CLIENT_API}build/${client}/${buildId}/stringKeyMap`);
+  }
+
   batchReplaceScreenshots(client: string, buildId: string, screenshots: string[]) {
     let params = {
       screenshots: screenshots

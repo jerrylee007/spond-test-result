@@ -99,11 +99,15 @@
 }
 
 .number {
-  font-weight: bold;
   font-size: 22px;
 }
 
 .failed-number {
+    color: $spond-red;
+}
+
+.crashed-number {
+    font-weight: bold;
     color: $spond-red;
 }
 
@@ -128,6 +132,15 @@
 .build-faild-screenshots-number-col {
   @extend .base-col;
   width: 30%;
+}
+
+.show-all-builds {
+  display: inline-block;
+  padding: 5px;
+  width: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 
