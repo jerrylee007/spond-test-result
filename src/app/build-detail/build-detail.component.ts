@@ -18,6 +18,7 @@ export enum BUILD_DETAIL_FILTER_TYPE {
   IGNORED = <any>"Ignored",
   CRASHED = <any>"Crashed",
   SIMILAR_FAILED = <any>"Similar failed",
+  BASE_DUPLICATED = <any>"Base duplicated",
 }
 
 @Component({
@@ -35,6 +36,8 @@ export class BuildDetailComponent implements OnInit {
   passBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnBatchReplace')
   batchReplaceBtns: QueryList<SpinnerButtonComponent>
+  @ViewChildren('btnBatchReplaceOnlyXml')
+  batchReplaceOnlyXmlBtns: QueryList<SpinnerButtonComponent>
   @ViewChildren('btnReplaceSimilar')
   replaceSimilarBtns: QueryList<SpinnerButtonComponent>
   @ViewChild('searchKeyControl')
@@ -56,12 +59,15 @@ export class BuildDetailComponent implements OnInit {
   caseCategories: any[] = [];
 
   baseScreenshots: any = [];
+  baseDuplicated: string[] = [];
   crashedScreenshots: any = [];
   currentFilter: any = BUILD_DETAIL_FILTER_TYPE.FAILED;
 
   noResultCase: string[] = [];
   noBaseCase: string[] = [];
+
   keyMap: any = {};
+  xmlResult: any = {};
 
   categoryToShow: any = 4;
 
@@ -85,7 +91,7 @@ export class BuildDetailComponent implements OnInit {
 
     this.service.getResultById(this.client, this.buildId).subscribe(results=>{
       this.service.getBaseScreenshots(this.client).subscribe(bases=>{
-        this.baseScreenshots = bases
+        this.baseScreenshots = bases;
         self.onInitBuilds(results)
         self.onFilterSelected(self.currentFilter)
       })
@@ -98,6 +104,17 @@ export class BuildDetailComponent implements OnInit {
     }
   }
 
+  getXml() {
+    this.service.getXml(this.client, this.buildId).subscribe(xml=>{
+      this.xmlResult = xml.results.testcase.map(function(caseObj, index) {
+        return {
+          id: caseObj.external_id,
+          result: caseObj.result.$t == 'p'
+        }
+      })
+    })
+  }
+
   ngOnInit() {
     setInterval(() => {
         if (this.oldSearchKey !== this.searchKey) {
@@ -108,6 +125,8 @@ export class BuildDetailComponent implements OnInit {
   }
 
   onInitBuilds(results) {
+    this.getXml();
+
     this.build = results
     if (this.build.failedData && this.build.failedData.constructor !== Array) {
       this.build.failedScreenshots = Object.keys(this.build.failedData)
@@ -124,6 +143,28 @@ export class BuildDetailComponent implements OnInit {
     }
     else {
       this.build.failedScreenshots = this.build.failedData
+    }
+
+
+    //find duplicated baseScreenshots, using (first case name) + (screenshot index) to make every screenshot unique
+    var screenshotsIndexs = {}
+    for (let base of this.baseScreenshots) {
+      var caseId = base.split("_")[0];
+      var parts = base.split(".")
+      parts.pop()
+      var index = parts.pop().split("_")[0]
+      var screenshotId = `${caseId}_${index}`
+
+      if (screenshotsIndexs[screenshotId]) {
+        if (!this.baseDuplicated.includes(screenshotsIndexs[screenshotId])) {
+          this.baseDuplicated.push(screenshotsIndexs[screenshotId])
+        }
+        
+        this.baseDuplicated.push(base)
+      }
+      else {
+        screenshotsIndexs[screenshotId] = base
+      }
     }
 
     if (this.diff.length > 0) {
@@ -155,6 +196,9 @@ export class BuildDetailComponent implements OnInit {
     }
     else if (filter == BUILD_DETAIL_FILTER_TYPE.SIMILAR_FAILED) {
        this.casesToShow = this.build.similarData || [];
+    }
+    else if (filter == BUILD_DETAIL_FILTER_TYPE.BASE_DUPLICATED) {
+       this.casesToShow = this.baseDuplicated || [];
     }
     else {
        this.casesToShow = this.baseScreenshots;
@@ -205,6 +249,31 @@ export class BuildDetailComponent implements OnInit {
     }
 
     this.categoryToShow = 4;
+  }
+
+  xmlPassed(category) {
+    var caseIds = [];
+
+    for (let caseName of category.cases) {
+       var names = (caseName.split(".")[1]).split("_");
+        for (let name of names) {
+          if (name.startsWith('SPND')) {
+            caseIds.push(name.replace('SPND', 'SPND-'));
+          }
+        }
+    }
+
+    var result = true;
+
+    for (let caseId of caseIds) {
+       var caseResult = this.xmlResult.find(x=>x.id == caseId);
+       if (!caseResult.result) {
+         result = false;
+         break;
+       }
+    }
+
+    return result
   }
 
   getResultScreenshotPath(screenshot) {
@@ -268,7 +337,7 @@ export class BuildDetailComponent implements OnInit {
   onUndoReplacementClicked(screenshot, index) {
     let btnUndoReplace = this.passBtns.find((btn, i)=>i == index);
     btnUndoReplace.isSpinning = true;
-    this.service.undoReplacement(this.client, this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.undoReplacement(this.client, this.build.buildNumber, screenshot, false).subscribe(results=>{
       btnUndoReplace.isSpinning = false;
      this.onInitBuilds(results)
     }, error=>{
@@ -279,13 +348,36 @@ export class BuildDetailComponent implements OnInit {
   onBatchReplaceClicked(category, index) {
     let btnBatchReplace = this.batchReplaceBtns.find((btn, i)=>i == index);
     btnBatchReplace.isSpinning = true;
-    this.service.batchReplaceScreenshots(this.client, this.build.buildNumber, category.cases).subscribe(results=>{
+    this.service.batchReplaceScreenshots(this.client, this.build.buildNumber, category.cases, false).subscribe(results=>{
       btnBatchReplace.isSpinning = false;
       this.onInitBuilds(results)
     }, error=>{
       btnBatchReplace.isSpinning = false;
     });
   }
+
+  onBatchReplaceOnlyXmlClicked(category, index) {
+    let btnBatchReplace = this.batchReplaceOnlyXmlBtns.find((btn, i)=>i == index);
+    btnBatchReplace.isSpinning = true;
+    this.service.batchReplaceScreenshots(this.client, this.build.buildNumber, category.cases, true).subscribe(results=>{
+      btnBatchReplace.isSpinning = false;
+      this.onInitBuilds(results)
+    }, error=>{
+      btnBatchReplace.isSpinning = false;
+    });
+  }
+
+  onUndoBatchReplaceOnlyXmlClicked(category, index) {
+    let btnBatchReplace = this.batchReplaceOnlyXmlBtns.find((btn, i)=>i == index);
+    btnBatchReplace.isSpinning = true;
+    this.service.undoReplacement(this.client, this.build.buildNumber, category.cases[0], true).subscribe(results=>{
+      btnBatchReplace.isSpinning = false;
+      this.onInitBuilds(results)
+    }, error=>{
+      btnBatchReplace.isSpinning = false;
+    });
+  }
+
 
   onBatchPassSimilarFailedClicked() {
     this.passSimilarFailedButton.isSpinning = true;

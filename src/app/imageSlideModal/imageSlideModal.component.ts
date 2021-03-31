@@ -135,7 +135,7 @@ export class ImageSlideModalComponent implements OnInit {
 
   onUndoReplacementClicked(screenshot) {
     this.btnUndoReplace.isSpinning = true;
-    this.service.undoReplacement(this.build.client, this.build.buildNumber, screenshot).subscribe(results=>{
+    this.service.undoReplacement(this.build.client, this.build.buildNumber, screenshot, false).subscribe(results=>{
       this.btnUndoReplace.isSpinning = false;
       this.hide();
       this.onBuildUpdated.emit(results);

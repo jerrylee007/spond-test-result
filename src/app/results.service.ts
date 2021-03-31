@@ -38,9 +38,14 @@ export class ResultsService {
     return this.http.get<any>(`${CLIENT_API}build/${client}/${buildId}/stringKeyMap`);
   }
 
-  batchReplaceScreenshots(client: string, buildId: string, screenshots: string[]) {
+  getXml(client: string, buildId: string) {
+    return this.http.get<any>(`${CLIENT_API}build/${client}/${buildId}/xml`);
+  }
+
+  batchReplaceScreenshots(client: string, buildId: string, screenshots: string[], onlyChangeXml: boolean) {
     let params = {
-      screenshots: screenshots
+      screenshots: screenshots,
+      onlyChangeXml: !!onlyChangeXml
     }
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/batchReplace`, params);
   }
@@ -64,9 +69,10 @@ export class ResultsService {
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/remove`, {});
   }
 
-  batchRemoveBaseScreenshots(caseId: string) {
+  batchRemoveBaseScreenshots(caseId: string, platform: string) {
     let params = {
-      caseId: caseId
+      caseId: caseId,
+      platform: platform
     }
     return this.http.post(`${CLIENT_API}batchRemoveBase`, params);
   }
@@ -85,9 +91,10 @@ export class ResultsService {
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/removeBase`, params);
   }
 
-  undoReplacement(client: string, buildId: string, screenshot: string) {
+  undoReplacement(client: string, buildId: string, screenshot: string, onlyChangeXml: boolean) {
     let params = {
-      screenshot: screenshot
+      screenshot: screenshot,
+      onlyChangeXml: onlyChangeXml
     }
     return this.http.post(`${CLIENT_API}build/${client}/${buildId}/undoReplace`, params);
   }

@@ -91,8 +91,35 @@
   spinnerTheme="spinner-white"
   buttonTheme="btn-with-shadow spond-small-red"
   [isDisabled]="!isRemovingBase"
-  (click)="onRemoveBase();$event.stopPropagation();" aria-label="Close">
-    Remove
+  (click)="onRemoveBase('ios');$event.stopPropagation();" aria-label="Close">
+    Only Remove iOS
+  </spinner-button>
+  <spinner-button 
+  #btnRemoveBase
+  class="remove-base-action"
+  spinnerTheme="spinner-white"
+  buttonTheme="btn-with-shadow spond-small-red"
+  [isDisabled]="!isRemovingBase"
+  (click)="onRemoveBase('android');$event.stopPropagation();" aria-label="Close">
+    Only Remove Android
+  </spinner-button>
+  <spinner-button 
+  #btnRemoveBase
+  class="remove-base-action"
+  spinnerTheme="spinner-white"
+  buttonTheme="btn-with-shadow spond-small-red"
+  [isDisabled]="!isRemovingBase"
+  (click)="onRemoveBase('web');$event.stopPropagation();" aria-label="Close">
+    Only Remove Web
+  </spinner-button>
+  <spinner-button 
+  #btnRemoveBase
+  class="remove-base-action"
+  spinnerTheme="spinner-white"
+  buttonTheme="btn-with-shadow spond-small-red"
+  [isDisabled]="!isRemovingBase"
+  (click)="onRemoveBase('');$event.stopPropagation();" aria-label="Close">
+    Remove all
   </spinner-button>
 </div>
 

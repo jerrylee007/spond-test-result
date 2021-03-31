@@ -29,6 +29,7 @@ export class DashboardComponent implements OnInit {
   allBuilds: any = [{}, {}, {}, {}, {}, {}, {}, {}]
 
   removingBuild: any
+  removingPlatform: any
   isRemovingBase: boolean
 
 
@@ -96,6 +97,15 @@ export class DashboardComponent implements OnInit {
 
       this.allBuilds[this.clientToIndex('club_dev')] = buildInfo;
     });
+
+    this.service.getAllResults('club_staging').subscribe(results=>{
+      var buildInfo = {client: 'club_staging', 
+                      server: 'staging',
+                      results: results}
+
+
+      this.allBuilds[this.clientToIndex('club_staging')] = buildInfo;
+    });
   }
 
   ngOnInit() {
@@ -154,7 +164,7 @@ export class DashboardComponent implements OnInit {
     this.removingBuild = build;
   }
 
-   onRemoveBase() {
+   onRemoveBase(platform) {
     this.confirmRemoveBaseModal.show(
         'Confirm Remove Base',
         'Are you sure you want to remove this base images, you will lose them forever?',
@@ -162,10 +172,11 @@ export class DashboardComponent implements OnInit {
         'Remove',
         true
         )
+    this.removingPlatform = platform.length > 0 ? platform : undefined;
   }
 
    onConfirmRemoveBaseClicked(event: DeferredClickEvent) {
-    this.service.batchRemoveBaseScreenshots(this.searchKey).subscribe(results=>{
+    this.service.batchRemoveBaseScreenshots(this.searchKey, this.removingPlatform).subscribe(results=>{
       event.success();
 
       this.onRemoveBaseSucceed(results);
