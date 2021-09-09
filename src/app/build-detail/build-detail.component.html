@@ -58,7 +58,6 @@
               class="build-detail-section-title-action"
               spinnerTheme="spinner-white"
               buttonTheme="btn-with-shadow spond-blue"
-              [isDisabled]="!category.isReplacing"
               (click)="onBatchReplaceClicked(category, categoryIndex)" 
               aria-label="Close">
                 Pass all
@@ -71,10 +70,9 @@
               class="build-detail-section-title-action"
               spinnerTheme="spinner-white"
               buttonTheme="btn-with-shadow spond-blue"
-              [isDisabled]="!category.isReplacing"
               (click)="onBatchReplaceOnlyXmlClicked(category, categoryIndex)" 
               aria-label="Close">
-                Pass all without replacing sceenshots
+                Mark testlink.xml as Pass
               </spinner-button>
               <spinner-button 
               style="margin-left: 20px;"
@@ -84,10 +82,9 @@
               class="build-detail-section-title-action"
               spinnerTheme="spinner-white"
               buttonTheme="btn-with-shadow spond-red"
-              [isDisabled]="!category.isReplacing"
               (click)="onUndoBatchReplaceOnlyXmlClicked(category, categoryIndex)" 
               aria-label="Close">
-                Undo pass all without replacing sceenshots
+                  Mark testlink.xml as Failed
               </spinner-button>
               <div class="build-detail-section-title-text">{{category.name}}</div>
             </div>

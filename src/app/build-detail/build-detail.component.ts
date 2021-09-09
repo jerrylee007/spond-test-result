@@ -289,7 +289,7 @@ export class BuildDetailComponent implements OnInit {
      return this.noResultCase.includes(caseName);
   }
 
-    testAccountName(caseName) {
+    testAccountName(caseName : string) {
         return this.build.failedData[caseName]?.mainAccount;
     }
 
