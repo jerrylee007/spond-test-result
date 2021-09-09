@@ -99,7 +99,7 @@ export class BuildDetailComponent implements OnInit {
 
     if (this.client.includes('android')) {
       this.service.getAndroidStringsKeyMap(this.client, this.buildId).subscribe(keyMap=>{
-        this.keyMap = keyMap
+        this.keyMap = keyMap;
       })
     }
   }
@@ -127,14 +127,13 @@ export class BuildDetailComponent implements OnInit {
   onInitBuilds(results) {
     this.getXml();
 
-    this.build = results
+    this.build = results;
     if (this.build.failedData && this.build.failedData.constructor !== Array) {
       this.build.failedScreenshots = Object.keys(this.build.failedData)
       this.noBaseCase = this.build.failedScreenshots.filter( ( el ) => !this.baseScreenshots.includes( el ) )
       if (this.build.crashData) {
         this.crashedScreenshots = this.build.failedScreenshots.filter( ( el ) => 
-          this.build.crashData.filter(caseId=> el.includes(caseId)).length > 0
-          )
+          this.build.crashData.filter(caseId=> el.includes(caseId)).length > 0)
       }
       else {
         this.crashedScreenshots = [];
@@ -142,7 +141,7 @@ export class BuildDetailComponent implements OnInit {
 
     }
     else {
-      this.build.failedScreenshots = this.build.failedData
+      this.build.failedScreenshots = this.build.failedData;
     }
 
 
@@ -150,20 +149,20 @@ export class BuildDetailComponent implements OnInit {
     var screenshotsIndexs = {}
     for (let base of this.baseScreenshots) {
       var caseId = base.split("_")[0];
-      var parts = base.split(".")
-      parts.pop()
+      var parts = base.split(".");
+      parts.pop();
       var index = parts.pop().split("_")[0]
-      var screenshotId = `${caseId}_${index}`
+      var screenshotId = `${caseId}_${index}`;
 
       if (screenshotsIndexs[screenshotId]) {
         if (!this.baseDuplicated.includes(screenshotsIndexs[screenshotId])) {
-          this.baseDuplicated.push(screenshotsIndexs[screenshotId])
+          this.baseDuplicated.push(screenshotsIndexs[screenshotId]);
         }
         
-        this.baseDuplicated.push(base)
+        this.baseDuplicated.push(base);
       }
       else {
-        screenshotsIndexs[screenshotId] = base
+        screenshotsIndexs[screenshotId] = base;
       }
     }
 
@@ -208,7 +207,9 @@ export class BuildDetailComponent implements OnInit {
     this.caseCategories = [];
 
     for (let caseName of this.casesToShow) {
-
+        if (caseName.includes('2392')) {
+            //debugger
+        }
       if (this.searchKey.length == 0 || caseName.includes(this.searchKey) || (this.keyMap[this.searchKey] && this.keyMap[this.searchKey].includes(caseName))) {
 
         var caseIds = caseName.split("_");
@@ -225,19 +226,11 @@ export class BuildDetailComponent implements OnInit {
           }
         }
 
-        //Add test account name to it if it is failed cases
-        if (filter == BUILD_DETAIL_FILTER_TYPE.FAILED || filter == BUILD_DETAIL_FILTER_TYPE.CRASHED || filter == BUILD_DETAIL_FILTER_TYPE.FAILED_AFTER_FIXED) {
-          var failedCaseDetails = this.build.failedData[caseName];
-          if (failedCaseDetails && failedCaseDetails.mainAccount) {
-            category += (" ("+failedCaseDetails.mainAccount+")");
-          }
-        }
-
         if (!categoryDict[category]) {
           categoryDict[category] = [];
         }
 
-        categoryDict[category].push(caseName)
+        categoryDict[category].push(caseName);
       }
     }
 
@@ -273,7 +266,7 @@ export class BuildDetailComponent implements OnInit {
        }
     }
 
-    return result
+    return result;
   }
 
   getResultScreenshotPath(screenshot) {
@@ -295,6 +288,11 @@ export class BuildDetailComponent implements OnInit {
   isResultFailed(caseName : string) {
      return this.noResultCase.includes(caseName);
   }
+
+    testAccountName(caseName) {
+        return this.build.failedData[caseName]?.mainAccount;
+    }
+
 
   isBaseFailed(caseName : string) {
      return this.noBaseCase.includes(caseName);
