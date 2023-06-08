@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
 
   searchKey: string = ""
 
-  allBuilds: any = [{}, {}, {}, {}, {}, {}, {}, {}]
+  allBuilds: any = [{}, {}, {}, {}, {}, {}]
 
   removingBuild: any
   removingPlatform: any
@@ -89,23 +89,23 @@ export class DashboardComponent implements OnInit {
       this.allBuilds[this.clientToIndex('web_staging')] = buildInfo;
     });
 
-    this.service.getAllResults('club_dev').subscribe(results=>{
-      var buildInfo = {client: 'club_dev', 
-                      server: 'dev',
-                      results: results}
-
-
-      this.allBuilds[this.clientToIndex('club_dev')] = buildInfo;
-    });
-
-    this.service.getAllResults('club_staging').subscribe(results=>{
-      var buildInfo = {client: 'club_staging', 
-                      server: 'staging',
-                      results: results}
-
-
-      this.allBuilds[this.clientToIndex('club_staging')] = buildInfo;
-    });
+    // this.service.getAllResults('club_dev').subscribe(results=>{
+    //   var buildInfo = {client: 'club_dev',
+    //                   server: 'dev',
+    //                   results: results}
+    //
+    //
+    //   this.allBuilds[this.clientToIndex('club_dev')] = buildInfo;
+    // });
+    //
+    // this.service.getAllResults('club_staging').subscribe(results=>{
+    //   var buildInfo = {client: 'club_staging',
+    //                   server: 'staging',
+    //                   results: results}
+    //
+    //
+    //   this.allBuilds[this.clientToIndex('club_staging')] = buildInfo;
+    // });
   }
 
   ngOnInit() {

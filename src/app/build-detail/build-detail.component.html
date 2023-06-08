@@ -96,7 +96,7 @@
               <img *ngIf="!isCaseFixed(case)" [src]="failedIcon" class="case-status-icon"/> -->
 
               <div class="build-detail-item-title">
-                  {{case}}{{' (' + testAccountName(case) + ')'}}
+                  {{'(' + testScore(case) + ') '}}{{case}}{{' (' + testAccountName(case) + ')'}}
               </div>
 
 

@@ -97,11 +97,11 @@ export class BuildDetailComponent implements OnInit {
       })
     })
 
-    if (this.client.includes('android')) {
-      this.service.getAndroidStringsKeyMap(this.client, this.buildId).subscribe(keyMap=>{
-        this.keyMap = keyMap;
-      })
-    }
+    // if (this.client.includes('android')) {
+    //   this.service.getAndroidStringsKeyMap(this.client, this.buildId).subscribe(keyMap=>{
+    //     this.keyMap = keyMap;
+    //   })
+    // }
   }
 
   getXml() {
@@ -260,7 +260,7 @@ export class BuildDetailComponent implements OnInit {
 
     for (let caseId of caseIds) {
        var caseResult = this.xmlResult.find(x=>x.id == caseId);
-       if (!caseResult.result) {
+       if (caseResult && !caseResult.result) {
          result = false;
          break;
        }
@@ -293,8 +293,12 @@ export class BuildDetailComponent implements OnInit {
         return this.build.failedData[caseName]?.mainAccount;
     }
 
+    testScore(caseName : string) {
+        return this.build.failedData[caseName]?.score;
+    }
 
-  isBaseFailed(caseName : string) {
+
+    isBaseFailed(caseName : string) {
      return this.noBaseCase.includes(caseName);
   }
 

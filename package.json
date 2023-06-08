@@ -52,5 +52,8 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0"
+  },
+  "volta": {
+    "node": "12.22.12"
   }
 }

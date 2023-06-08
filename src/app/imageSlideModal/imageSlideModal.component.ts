@@ -22,6 +22,7 @@ export class ImageSlideModalComponent implements OnInit {
   btnRemove: SpinnerButtonComponent
 
   showingImage: any
+    showingImageTitle: any
   imageCandidates: any[]
   currentIndex: number
   build: any
@@ -63,7 +64,8 @@ export class ImageSlideModalComponent implements OnInit {
     if (build.failedData && build.failedData.constructor !== Array) {
       this.imageCandidates = build.failedData ? Object.keys(build.failedData) : [];
       this.similarCount = (this.imageCandidates.filter(image=> build.failedData[imageToShow] && build.failedData[image] && (Math.abs(build.failedData[image].diff - build.failedData[imageToShow].diff) <= 30)
-                                                                && build.failedData[image].diff > 0)).length
+                                                                && build.failedData[image].diff > 0)).length;
+      this.showingImageTitle = `(${build.failedData[imageToShow]?.score}) ${this.showingImage}`;
     }
     else {
       this.imageCandidates = build.failedData ? build.failedData : [];
